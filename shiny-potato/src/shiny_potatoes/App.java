@@ -41,6 +41,9 @@ public class App {
 		//kolor tła
 		GL11.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		
+		//aby nie lapac kursora wielokrotnie pod rzad
+		boolean buttonPressed = false;
+		
 		while(!GLFW.glfwWindowShouldClose(window)) {
 			GL11.glClear(GL33.GL_COLOR_BUFFER_BIT);
 			
@@ -59,6 +62,33 @@ public class App {
 			
 			//zakończ rysować wielokąt
 			GL11.glEnd();
+			
+			//mialo byc zgrane z polozeniem wielokata,
+			//ale z jakichs powodow width i height w tym miejscu wynosza 1
+			if (GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS && !buttonPressed){
+				buttonPressed = true;
+				int size = 1;
+				double xpos[] = new double[size], ypos[] = new double[size];
+				GLFW.glfwGetCursorPos(window, xpos, ypos);
+				if (xpos[0] > 450) {
+					System.out.println("to the left");
+				}
+				else if (xpos[0] < 150) {
+					System.out.println("to the right");
+				}
+				else if (ypos[0] > 450) {
+					System.out.println("higher");
+				}
+				else if (ypos[0] < 150) {
+					System.out.println("lower");
+				}
+				else {
+					System.out.println("perfect!");
+				}
+			}
+			if (GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_LEFT) != GLFW.GLFW_PRESS) {
+				buttonPressed = false;
+			}
 			
 			//wyrzuć narysowany w buforze wielokąt na ekran
 			GLFW.glfwSwapBuffers(window);
