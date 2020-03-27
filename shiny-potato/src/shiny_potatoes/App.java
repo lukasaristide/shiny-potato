@@ -1,5 +1,6 @@
 package shiny_potatoes;
 
+import java.nio.DoubleBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.glfw.GLFW;
@@ -11,6 +12,7 @@ public class App {
 	
 	private static long window;
 	static double height=1, width=1;
+	static boolean changed = false;
 
 	public static void main(String[] args) throws InterruptedException {
 		//inicjalizacja biblioteki
@@ -36,6 +38,7 @@ public class App {
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			App.height = height;
 			App.width = width;
+			changed = true;
 		});
 		
 		//kolor tła
@@ -89,6 +92,27 @@ public class App {
 			if (GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_LEFT) != GLFW.GLFW_PRESS) {
 				buttonPressed = false;
 			}
+			
+			double[] xpos = new double[1],
+					ypos = new double[1];
+			GLFW.glfwGetCursorPos(window, xpos, ypos);
+			double x = -width/2 + xpos[0],
+					y = height/2 - ypos[0];
+			if(!changed) {
+				x/=600;
+				y/=600;
+				x-=width/2;
+				y+=height/2;
+			}
+			GL11.glBegin(GL11.GL_POLYGON);
+			double diffW = width/20;
+			double diffH = height/20;
+			GL11.glColor3f(1.0f, 1.0f, 1.0f);
+			GL11.glVertex2d(2*x-diffW,2*y);
+			GL11.glVertex2d(2*x,2*y+diffH);
+			GL11.glVertex2d(2*x+diffW,2*y);
+			GL11.glVertex2d(2*x,2*y-diffH);
+			GL11.glEnd();
 			
 			//wyrzuć narysowany w buforze wielokąt na ekran
 			GLFW.glfwSwapBuffers(window);
