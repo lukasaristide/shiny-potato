@@ -1,1 +1,1 @@
-Shiny Potato - an immersive game of potates
+**Shiny Potato - an immersive game of potates**
