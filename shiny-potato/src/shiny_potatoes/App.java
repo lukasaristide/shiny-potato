@@ -66,23 +66,23 @@ public class App {
 			//zakończ rysować wielokąt
 			GL11.glEnd();
 			
-			//mialo byc zgrane z polozeniem wielokata,
-			//ale z jakichs powodow width i height w tym miejscu wynosza 1
+			//sprawdza, czy klikniecie bylo wewnatrz wielokata - na razie z wyjsciem do System.out
 			if (GLFW.glfwGetMouseButton(window, GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS && !buttonPressed){
 				buttonPressed = true;
-				int size = 1;
-				double xpos[] = new double[size], ypos[] = new double[size];
+				double xpos[] = new double[1], ypos[] = new double[1];
+				int currWidth[] = new int[1], currHeight[] = new int[1];
+				GLFW.glfwGetWindowSize(window, currWidth, currHeight);
 				GLFW.glfwGetCursorPos(window, xpos, ypos);
-				if (xpos[0] > 450) {
+				if (xpos[0] > 3*currWidth[0]/4) {
 					System.out.println("to the left");
 				}
-				else if (xpos[0] < 150) {
+				else if (xpos[0] < currWidth[0]/4) {
 					System.out.println("to the right");
 				}
-				else if (ypos[0] > 450) {
+				else if (ypos[0] > 3*currHeight[0]/4) {
 					System.out.println("higher");
 				}
-				else if (ypos[0] < 150) {
+				else if (ypos[0] < currHeight[0]/4) {
 					System.out.println("lower");
 				}
 				else {
