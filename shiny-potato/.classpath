@@ -51,5 +51,35 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl/lwjgl-natives-windows-x86.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl/lwjgl-natives-windows.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-natives-windows-x86.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-natives-windows.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-natives-windows.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
