@@ -6,7 +6,7 @@
   <name>shiny-potato</name>
   <description>Immersive game of potatoes</description>
   <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>src, lib</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
