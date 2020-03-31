@@ -6,79 +6,79 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl/lwjgl-natives-linux.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-natives-linux.jar" sourcepath="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl/lwjgl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl/lwjgl.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar" sourcepath="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl/lwjgl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-natives-linux.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-glfw/lwjgl-glfw-natives-linux.jar" sourcepath="lib/lwjgl-glfw/lwjgl-glfw-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-glfw/lwjgl-glfw.jar" sourcepath="lib/lwjgl-glfw/lwjgl-glfw-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-natives-linux.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-opengl/lwjgl-opengl-natives-linux.jar" sourcepath="lib/lwjgl-opengl/lwjgl-opengl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-opengl/lwjgl-opengl.jar" sourcepath="lib/lwjgl-opengl/lwjgl-opengl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl/lwjgl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-glfw/lwjgl-glfw-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-opengl/lwjgl-opengl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl/lwjgl-natives-windows-x86.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-natives-windows-x86.jar" sourcepath="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl/lwjgl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl/lwjgl-natives-windows.jar" sourcepath="lwjgl/lwjgl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-natives-windows.jar" sourcepath="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl/lwjgl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl/lwjgl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-natives-windows-x86.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-glfw/lwjgl-glfw-natives-windows-x86.jar" sourcepath="lib/lwjgl-glfw/lwjgl-glfw-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-glfw/lwjgl-glfw-natives-windows.jar" sourcepath="lwjgl-glfw/lwjgl-glfw-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-glfw/lwjgl-glfw-natives-windows.jar" sourcepath="lib/lwjgl-glfw/lwjgl-glfw-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-glfw/lwjgl-glfw-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar" sourcepath="lib/lwjgl-opengl/lwjgl-opengl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lwjgl-opengl/lwjgl-opengl-natives-windows.jar" sourcepath="lwjgl-opengl/lwjgl-opengl-sources.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-opengl/lwjgl-opengl-natives-windows.jar" sourcepath="lib/lwjgl-opengl/lwjgl-opengl-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
