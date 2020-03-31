@@ -1,8 +1,5 @@
 package shiny_potatoes;
 
-import java.nio.DoubleBuffer;
-import java.nio.IntBuffer;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
