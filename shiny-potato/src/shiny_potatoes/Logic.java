@@ -17,5 +17,7 @@ public class Logic {
 }
 
 class Potato{
-	
+	boolean isPresent;
+	Potato(){isPresent = false;}
+	Potato(boolean isPresent){this.isPresent = isPresent;}
 }
