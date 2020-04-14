@@ -16,14 +16,14 @@ public class Logic {
 		for (int i = 0; i < rows; i++) {
 			board.add(new Vector<Potato>(columns)); // initialization 2
 			for (int j = 0; j < columns; j++)
-				board.elementAt(j).add(new Potato()); // initialization 3
+				board.elementAt(i).add(new Potato(true)); // initialization 3
 		}
 		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
 		// lib initialization
 		GLFW.glfwInit();
 		// window creation
-		window = GLFW.glfwCreateWindow(height, width, "Shiny Potatoes", 0, 0);
+		window = GLFW.glfwCreateWindow(width, height, "Shiny Potatoes", 0, 0);
 	}
 }
 
