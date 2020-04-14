@@ -11,7 +11,7 @@ public class App {
 	static double height=1, width=1;
 	static boolean changed = false;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void sample() throws InterruptedException {
 		//inicjalizacja biblioteki
 		GLFW.glfwInit();
 		
