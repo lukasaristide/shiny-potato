@@ -2,7 +2,7 @@ package shiny_potatoes;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL46;
 
 public class Graphic extends Thread {
 	private Logic resource;
@@ -13,26 +13,49 @@ public class Graphic extends Thread {
 		GLFW.glfwMakeContextCurrent(resource.window);
 		// creating capabilities for the current thread
 		GL.createCapabilities();
+		//background is now grey
+		GL46.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	}
 
 	void resizeWindow() {	//reenumeration of cooridinates
-		GL11.glViewport(0, 0, resource.width, resource.height);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, w, 0, h, -1, 1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL46.glViewport(0, 0, resource.width, resource.height);
+		GL46.glMatrixMode(GL46.GL_PROJECTION);
+		GL46.glLoadIdentity();
+		GL46.glOrtho(0, w, h, 0, -1, 1);
+		GL46.glMatrixMode(GL46.GL_MODELVIEW);
 	}
 	void drawMenu() {
-		
+		GL46.glBegin(GL46.GL_POLYGON_SMOOTH);
+		GL46.glColor3i(1, 1, 1);
+		GL46.glVertex2i(1, 1);
+		GL46.glVertex2i(resource.columns-1, 1);
+		GL46.glVertex2i(resource.columns-1, 5);
+		GL46.glVertex2i(1, 5);
+		GL46.glEnd();
+		GLFW.glfwSwapBuffers(resource.window);
 	}
 	void drawGame() {
-		
+		for(double x = 0; x < w; x++) {
+			for(double y = 0; y < h; y++) {
+				if(!resource.board.get((int)y).get((int)x).isPresent)
+					continue;
+				GL46.glBegin(GL46.GL_POLYGON_SMOOTH);
+				GL46.glColor3i(1, 1, 1);
+				GL46.glVertex2d(x, y);
+				GL46.glVertex2d(x+1, y);
+				GL46.glVertex2d(x+1, y+1);
+				GL46.glVertex2d(x, y+1);
+				GL46.glEnd();
+			}
+		}
+		GLFW.glfwSwapBuffers(resource.window);
 	}
 	@Override
 	public void run() {
 		initializeEverything();
 		resizeWindow();
 		while (!GLFW.glfwWindowShouldClose(resource.window)) {
+			GL46.glClear(GL46.GL_COLOR_BUFFER_BIT);
 			switch(resource.currentPerspective) {
 			case menu:
 				drawMenu();
@@ -53,5 +76,6 @@ public class Graphic extends Thread {
 		this.resource = resource;
 		h = resource.rows;
 		w = resource.columns;
+		setDaemon(true);
 	}
 }
