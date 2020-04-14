@@ -5,8 +5,9 @@ import java.util.Vector;
 import org.lwjgl.glfw.GLFW;
 
 public class Logic {
+	Perspective currentPerspective = Perspective.menu;
 	long window;
-	double height = 1, width = 1;
+	int height = 480, width = 270;
 	int rows = 7, columns = 13;
 	Vector<Vector<Potato>> board; // this will store potatoes
 
@@ -22,8 +23,12 @@ public class Logic {
 		// lib initialisation
 		GLFW.glfwInit();
 		// window creation
-		window = GLFW.glfwCreateWindow(480, 270, "Shiny Potatoes", 0, 0);
+		window = GLFW.glfwCreateWindow(height, width, "Shiny Potatoes", 0, 0);
 	}
+}
+
+enum Perspective{
+	game, menu;
 }
 
 class Potato {
