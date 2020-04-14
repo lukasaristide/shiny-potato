@@ -20,7 +20,7 @@ public class Logic {
 		}
 		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
-		// lib initialisation
+		// lib initialization
 		GLFW.glfwInit();
 		// window creation
 		window = GLFW.glfwCreateWindow(height, width, "Shiny Potatoes", 0, 0);
