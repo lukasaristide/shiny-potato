@@ -8,7 +8,7 @@ public class Logic {
 	Perspective currentPerspective = Perspective.menu;
 	long window;
 	int height = 480, width = 270;
-	int rows = 7, columns = 13;
+	int rows = 13, columns = 7;
 	Vector<Vector<Potato>> board; // this will store potatoes
 
 	Logic() {
