@@ -17,7 +17,7 @@ public class Logic {
 			for (int j = 0; j < columns; j++)
 				board.elementAt(j).add(new Potato()); // initialization 3
 		}
-		// those fwo calls have to be called from the main thread - so they are called
+		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
 		// lib initialisation
 		GLFW.glfwInit();
