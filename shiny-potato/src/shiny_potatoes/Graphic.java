@@ -25,7 +25,7 @@ public class Graphic extends Thread {
 		GL46.glMatrixMode(GL46.GL_MODELVIEW);
 	}
 	void drawMenu() {
-		GL46.glBegin(GL46.GL_POLYGON_SMOOTH);
+		GL46.glBegin(GL46.GL_POLYGON);
 		GL46.glColor3i(1, 1, 1);
 		GL46.glVertex2i(1, 1);
 		GL46.glVertex2i(resource.columns-1, 1);
@@ -39,12 +39,13 @@ public class Graphic extends Thread {
 			for(double y = 0; y < h; y++) {
 				if(!resource.board.get((int)y).get((int)x).isPresent)
 					continue;
-				GL46.glBegin(GL46.GL_POLYGON_SMOOTH);
+				GL46.glBegin(GL46.GL_POLYGON);
 				GL46.glColor3i(1, 1, 1);
-				GL46.glVertex2d(x, y);
-				GL46.glVertex2d(x+1, y);
-				GL46.glVertex2d(x+1, y+1);
-				GL46.glVertex2d(x, y+1);
+				GL46.glVertex2d(x+0.1, y+0.1);
+				GL46.glVertex2d(x+0.8, y+0.1);
+				GL46.glVertex2d(x+0.8, y+0.8);
+				GL46.glVertex2d(x+0.1, y+0.8);
+				
 				GL46.glEnd();
 			}
 		}
