@@ -47,9 +47,41 @@ public class Logic {
 				if (div%2 == 0) {
 					x = columns-1 - x;
 				}
-			} //the fix is still problematic for too small shooting angles
-			if (board.elementAt(y).elementAt(x).isPresent)
+			}
+			if (board.elementAt(y).elementAt(x).isPresent) {
+				//this is game over
+				if (y == rows-2)
+					break;
+				//additional fix for too small shooting angles
+				int diff = 0;
+				if ((x-xnew) > 1) {
+					diff = 1;
+				}
+				else if ((xnew-x) > 1) {
+					diff = -1;
+				}
+				else {
+					break; //this means the angle was good
+				}
+				while (xnew+diff != x) {
+					if (board.elementAt(y).elementAt(xnew).isPresent)
+						break;
+					else if (ynew != -1 && board.elementAt(ynew).elementAt(xnew+diff).isPresent)
+						break;
+					xnew += diff;
+					if (xnew < 0) {
+						xnew = 0;
+						break;
+					}
+					else if (xnew >= columns) {
+						xnew = columns-1;
+						break;
+					}
+				}
+				if (!board.elementAt(y).elementAt(xnew).isPresent)
+					ynew = y;
 				break;
+			}
 			xnew = x;
 			ynew = y;
 		}
@@ -64,7 +96,7 @@ public class Logic {
 		for (int i = 0; i < 3; i++) {
 			board.add(new Vector<Potato>(columns)); // initialization 2
 			for (int j = 0; j < columns; j++)
-				board.elementAt(i).add(new Potato()); // initialization 3
+				board.elementAt(i).add(new Potato(true)); // initialization 3
 		}
 		for (int i = 3; i < rows; i++) {
 			board.add(new Vector<Potato>(columns)); // initialization 2 cont'd
