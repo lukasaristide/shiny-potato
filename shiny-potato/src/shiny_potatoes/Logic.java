@@ -13,7 +13,7 @@ public class Logic {
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
-	void shootPotato(double xpos, double ypos) {
+	synchronized void shootPotato(double xpos, double ypos) {
 		//position of the cursor in potatoes
 		int xpot = (int)((xpos*columns + width-1)/width)-1;
 		int ypot = (int)((ypos*rows + height-1)/height)-1;
@@ -87,24 +87,37 @@ public class Logic {
 		}
 		if (xnew != -1 && ynew != -1)
 			board.elementAt(ynew).elementAt(xnew).isPresent = true;
-		//else - game over
+		else
+			gameOver();
 	}
-
-	Logic() {
+	
+	void gameOver() {
+		currentPerspective = Perspective.menu;
+		setBoard();
+	}
+	
+	void setBoard() {
 		//start with three rows and rest of the board empty
-		board = new Vector<Vector<Potato>>(rows); // initialization 1
 		for (int i = 0; i < 3; i++) {
-			board.add(new Vector<Potato>(columns)); // initialization 2
 			for (int j = 0; j < columns; j++)
-				board.elementAt(i).add(new Potato(true)); // initialization 3
+				board.elementAt(i).elementAt(j).isPresent = true;
 		}
 		for (int i = 3; i < rows; i++) {
-			board.add(new Vector<Potato>(columns)); // initialization 2 cont'd
 			for (int j = 0; j < columns; j++)
-				board.elementAt(i).add(new Potato(false)); // initialization 3 cont'd
+				board.elementAt(i).elementAt(j).isPresent = false;
 		}
 		//this is the shooter
 		board.elementAt(rows-1).elementAt(columns/2).isPresent = true;
+	}
+
+	Logic() {
+		board = new Vector<Vector<Potato>>(rows); // initialization 1
+		for (int i = 0; i < rows; i++) {
+			board.add(new Vector<Potato>(columns)); // initialization 2
+			for (int j = 0; j < columns; j++)
+				board.elementAt(i).add(new Potato()); // initialization 3
+		}
+		setBoard();
 		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
 		// lib initialization
