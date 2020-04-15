@@ -1,6 +1,6 @@
 package shiny_potatoes;
 
-//import org.lwjgl.glfw.GLFW;	code for testing display
+//import org.lwjgl.glfw.GLFW;	//code for testing display
 
 public class ShinyPotato {
 	public static void main(String[] args) throws InterruptedException {
