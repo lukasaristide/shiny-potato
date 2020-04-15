@@ -6,18 +6,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
 public class Interface{
 	private Logic resource;
 	private ReentrantLock lock;
 	private ExecutorService executor;
+	private boolean pause;
 	
 	void setMouseButtonCallback() {
 		//this has to be called from the main thread
 		GLFW.glfwSetMouseButtonCallback(resource.window, new GLFWMouseButtonCallbackI() {
 			@Override
 			public void invoke(long window, int button, int action, int mods){
+				if (pause)
+					return;
 				if (action == GLFW.GLFW_PRESS && button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
 					switch(resource.currentPerspective) {
 					case menu:
@@ -51,11 +55,36 @@ public class Interface{
 			}
 		});
 	}
+	
+	void setKeyCallback() {
+		GLFW.glfwSetKeyCallback(resource.window, new GLFWKeyCallbackI() {
+			@Override
+			public void invoke(long window, int key, int scanode, int action, int mods) {
+				if (action == GLFW.GLFW_PRESS && key == GLFW.GLFW_KEY_ESCAPE) {
+					pause = !pause;
+					switch(resource.currentPerspective) {
+					case menu:
+						if (pause)
+							break;
+						resource.currentPerspective = Perspective.game;
+						break;
+					case game:
+						resource.currentPerspective = Perspective.menu;
+						break;
+					default:
+						break;	
+					}
+				}
+			}
+		});
+	}
 
 	Interface(Logic Resource) {
 		this.resource = Resource;
 		lock = new ReentrantLock();
 		executor = Executors.newCachedThreadPool();
+		pause = false;
 		setMouseButtonCallback();
+		setKeyCallback();
 	}
 }
