@@ -3,7 +3,6 @@ package shiny_potatoes;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
-//I decided to use glfw's callbacks instead of creating new thread
 public class Interface{
 	private Logic resource;
 	
@@ -13,7 +12,18 @@ public class Interface{
 			@Override
 			public void invoke(long window, int button, int action, int mods){
 				if (action == GLFW.GLFW_PRESS && button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-					//do something
+					switch(resource.currentPerspective) {
+					case menu:
+						resource.currentPerspective = Perspective.game;
+						break;
+					case game:
+						double xpos[] = new double[1], ypos[] = new double[1];
+						GLFW.glfwGetCursorPos(resource.window, xpos, ypos);
+						resource.shootPotato(xpos[0], ypos[0]);
+						break;
+					default:
+						break;	
+					}
 				}
 			}
 		});
