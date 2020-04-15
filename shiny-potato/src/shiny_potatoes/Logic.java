@@ -10,6 +10,8 @@ public class Logic {
 	int height = 480, width = 270;
 	int rows = 13, columns = 7;
 	Vector<Vector<Potato>> board; // this will store potatoes
+	
+	void shootPotato(double xpos, double ypos) {}
 
 	Logic() {
 		board = new Vector<Vector<Potato>>(rows); // initialization 1
