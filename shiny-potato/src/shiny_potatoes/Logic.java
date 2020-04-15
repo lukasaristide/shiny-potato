@@ -1,6 +1,7 @@
 package shiny_potatoes;
 
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -9,6 +10,7 @@ public class Logic {
 	long window;
 	int height = 480, width = 270;
 	int rows = 13, columns = 7;
+	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 
 	Logic() {

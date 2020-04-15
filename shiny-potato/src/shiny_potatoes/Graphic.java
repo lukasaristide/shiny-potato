@@ -40,6 +40,17 @@ public class Graphic extends Thread {
 		GL46.glEnd();
 		GLFW.glfwSwapBuffers(resource.window);
 	}
+	void drawFlyingPotato() {
+		GL46.glEnable(GL46.GL_TEXTURE_2D);
+		GL46.glBegin(GL46.GL_POLYGON);
+		GL46.glColor3d(1, 1, 1);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+0.1, resource.flyingPotatoY.get()+0.1);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+0.8, resource.flyingPotatoY.get()+0.1);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+0.8, resource.flyingPotatoY.get()+0.8);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+0.1, resource.flyingPotatoY.get()+0.8);
+		GL46.glEnd();
+		GL46.glDisable(GL46.GL_TEXTURE_2D);
+	}
 	void drawGame() {
 		for(double x = 0; x < w; x++) {
 			for(double y = 0; y < h; y++) {
