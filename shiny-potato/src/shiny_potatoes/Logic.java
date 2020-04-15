@@ -11,7 +11,29 @@ public class Logic {
 	int rows = 13, columns = 7;
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
-	void shootPotato(double xpos, double ypos) {}
+	void shootPotato(double xpos, double ypos) {
+		//position of the cursor in potatoes
+		int xpot = (int)((xpos*columns + width-1)/width)-1;
+		int ypot = (int)((ypos*rows + height-1)/height)-1;
+		//position of the shooter
+		int xsho = columns/2;
+		int ysho = rows-1;
+		//result position of new potato
+		int xnew = -1, ynew = -1;
+		//find first free position - size of potatoes ignored
+		for (int y = rows-2; y >= 0; y--) {
+			int x = (((xsho-xpot)*(y-ypot))/(ysho-ypot))+xpot;
+			
+			//fix when x is out of bounds
+			
+			if (board.elementAt(y).elementAt(x).isPresent)
+				break;
+			xnew = x;
+			ynew = y;
+		}
+		if (xnew != -1 && ynew != -1)
+			board.elementAt(ynew).elementAt(xnew).isPresent = true;
+	}
 
 	Logic() {
 		//start with three rows and rest of the board empty
