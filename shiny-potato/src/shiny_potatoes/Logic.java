@@ -13,7 +13,7 @@ public class Logic {
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
-	synchronized void shootPotato(double xpos, double ypos) {
+	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
 		int xpot = (int)((xpos*columns + width-1)/width)-1;
 		int ypot = (int)((ypos*rows + height-1)/height)-1;
@@ -84,6 +84,9 @@ public class Logic {
 			}
 			xnew = x;
 			ynew = y;
+			board.elementAt(ynew).elementAt(xnew).isPresent = true;
+			Thread.sleep(100);
+			board.elementAt(ynew).elementAt(xnew).isPresent = false;
 		}
 		if (xnew != -1 && ynew != -1)
 			board.elementAt(ynew).elementAt(xnew).isPresent = true;
