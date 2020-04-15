@@ -47,13 +47,13 @@ public class Graphic extends Thread {
 					continue;
 				GL46.glEnable(GL46.GL_TEXTURE_2D);
 				GL46.glBegin(GL46.GL_POLYGON);
-				GL46.glColor3i(1, 1, 1);
+				GL46.glColor3d(1, 1, 1);
 				GL46.glVertex2d(x+0.1, y+0.1);
 				GL46.glVertex2d(x+0.8, y+0.1);
 				GL46.glVertex2d(x+0.8, y+0.8);
 				GL46.glVertex2d(x+0.1, y+0.8);
-				
 				GL46.glEnd();
+				GL46.glDisable(GL46.GL_TEXTURE_2D);
 			}
 		}
 		GLFW.glfwSwapBuffers(resource.window);
