@@ -18,14 +18,34 @@ public class Logic {
 		//position of the shooter
 		int xsho = columns/2;
 		int ysho = rows-1;
+		//don't allow shooting at the level of the shooter
+		//it causes division by zero
+		if (ypot == ysho)
+			return;
 		//result position of new potato
 		int xnew = -1, ynew = -1;
 		//find first free position - size of potatoes ignored
 		for (int y = rows-2; y >= 0; y--) {
 			int x = (((xsho-xpot)*(y-ypot))/(ysho-ypot))+xpot;
-			
 			//fix when x is out of bounds
-			
+			if (x >= columns) {
+				if ((x/(columns-1))%2 == 0) {
+					x = x%(columns-1);
+				}
+				else {
+					x = columns-1 - (x%(columns-1));
+				}
+			} //modulo for negative numbers is tricky
+			else if (x < 0) {
+				int div = 0;
+				while (x < 0) {
+					div++;
+					x += columns-1;
+				}
+				if (div%2 == 0) {
+					x = columns-1 - x;
+				}
+			} //the fix is still problematic for too small shooting angles
 			if (board.elementAt(y).elementAt(x).isPresent)
 				break;
 			xnew = x;
@@ -33,6 +53,7 @@ public class Logic {
 		}
 		if (xnew != -1 && ynew != -1)
 			board.elementAt(ynew).elementAt(xnew).isPresent = true;
+		//else - game over
 	}
 
 	Logic() {
