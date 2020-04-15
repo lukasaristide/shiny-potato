@@ -44,7 +44,7 @@ public class Logic {
 					div++;
 					x += columns-1;
 				}
-				if (div%2 == 0) {
+				if (div%2 != 0) {
 					x = columns-1 - x;
 				}
 			}
@@ -80,6 +80,13 @@ public class Logic {
 				}
 				if (!board.elementAt(y).elementAt(xnew).isPresent)
 					ynew = y;
+				break;
+			} //don't allow shooting through a diagonal line of potatoes
+			else if (y > 0 && board.elementAt(y-1).elementAt(x).isPresent && 
+					((x > 0 && board.elementAt(y).elementAt(x-1).isPresent) ||
+							(x < columns-1 && board.elementAt(y).elementAt(x+1).isPresent))) {
+				xnew = x;
+				ynew = y;
 				break;
 			}
 			xnew = x;
