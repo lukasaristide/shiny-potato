@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW;
 public class Logic {
 	Perspective currentPerspective = Perspective.menu;
 	long window;
-	int height = 480, width = 270;
+	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 7;
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes

@@ -32,7 +32,7 @@ public class Graphic extends Thread {
 	}
 	void drawMenu() {
 		GL46.glBegin(GL46.GL_POLYGON);
-		GL46.glColor3i(1, 1, 1);
+		GL46.glColor3d(1, 1, 1);
 		GL46.glVertex2i(1, 1);
 		GL46.glVertex2i(resource.columns-1, 1);
 		GL46.glVertex2i(resource.columns-1, 5);
