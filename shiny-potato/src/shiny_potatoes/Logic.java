@@ -150,7 +150,7 @@ public class Logic {
 		
 		//menu coords
 		menuCoordsX[0] = menuCoordsX[3] = 1;
-		menuCoordsX[1] = menuCoordsX[2] = columns;
+		menuCoordsX[1] = menuCoordsX[2] = columns - 1;
 		menuCoordsY[0] = menuCoordsY[1] = 1;
 		menuCoordsY[2] = menuCoordsY[3] = 5;
 	}
