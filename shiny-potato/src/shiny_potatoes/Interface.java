@@ -76,6 +76,12 @@ public class Interface{
 			}
 		});
 	}
+	
+	void listen() {
+		while(!GLFW.glfwWindowShouldClose(resource.window))
+			GLFW.glfwWaitEvents();
+		GLFW.glfwDestroyWindow(resource.window);
+	}
 
 	Interface(Logic Resource) {
 		this.resource = Resource;
