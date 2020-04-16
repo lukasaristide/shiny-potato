@@ -1,6 +1,7 @@
 package shiny_potatoes;
 
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.glfw.GLFW;
@@ -12,6 +13,7 @@ public class Logic {
 	int rows = 13, columns = 7;
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
+	int[] menuCoordsX = new int[4], menuCoordsY = new int[4];
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
@@ -145,6 +147,12 @@ public class Logic {
 		GLFW.glfwInit();
 		// window creation
 		window = GLFW.glfwCreateWindow(width, height, "Shiny Potatoes", 0, 0);
+		
+		//menu coords
+		menuCoordsX[0] = menuCoordsX[3] = 1;
+		menuCoordsX[1] = menuCoordsX[2] = columns;
+		menuCoordsY[0] = menuCoordsY[1] = 1;
+		menuCoordsY[2] = menuCoordsY[3] = 5;
 	}
 }
 
