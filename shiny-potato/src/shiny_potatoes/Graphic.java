@@ -30,6 +30,7 @@ public class Graphic extends Thread {
 		GL46.glOrtho(0, w, h, 0, -1, 1);
 		GL46.glMatrixMode(GL46.GL_MODELVIEW);
 	}
+	
 	void drawMenu() {
 		GL46.glBegin(GL46.GL_POLYGON);
 		GL46.glColor3d(1, 1, 1);
@@ -56,6 +57,7 @@ public class Graphic extends Thread {
 		GL46.glEnd();
 		GL46.glDisable(GL46.GL_TEXTURE_2D);
 	}
+	
 	void drawGame() {
 		for(double x = 0; x < w; x++) {
 			for(double y = 0; y < h; y++) {
@@ -74,6 +76,7 @@ public class Graphic extends Thread {
 		}
 		GLFW.glfwSwapBuffers(resource.window);
 	}
+	
 	@Override
 	public void run() {
 		initializeEverything();
@@ -91,7 +94,7 @@ public class Graphic extends Thread {
 				break;	
 			}
 			try {
-				sleep(20);
+				sleep(10);
 			} catch (InterruptedException e) { e.printStackTrace(); return;}
 		}
 	}

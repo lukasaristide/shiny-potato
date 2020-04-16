@@ -13,7 +13,7 @@ public class Logic {
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 	int[] menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
-			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4];	//Button 2 - ranking
+			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4];	//Button2 - ranking
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
