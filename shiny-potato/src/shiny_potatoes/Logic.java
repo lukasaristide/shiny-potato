@@ -81,12 +81,23 @@ public class Logic {
 				if (!board.elementAt(y).elementAt(xnew).isPresent)
 					ynew = y;
 				break;
-			} //don't allow shooting through a diagonal line of potatoes
-			else if (y > 0 && board.elementAt(y-1).elementAt(x).isPresent && 
-					((x > 0 && board.elementAt(y).elementAt(x-1).isPresent) ||
-							(x < columns-1 && board.elementAt(y).elementAt(x+1).isPresent))) {
-				xnew = x;
-				ynew = y;
+			}
+			//don't allow shooting through a line of potatoes
+			boolean under = false, above = false;
+			if (xnew != -1 && ynew != -1) {
+				for (int i = Math.min(x, xnew); i <= Math.max(x, xnew); i++) {
+					if (!under && board.elementAt(ynew).elementAt(i).isPresent){
+						under = true;
+					}
+					if (!above && board.elementAt(y).elementAt(i).isPresent){
+						above = true;
+					}
+					if (under && above) {
+						break;
+					}
+				}
+			}
+			if (under && above) {
 				break;
 			}
 			xnew = x;
