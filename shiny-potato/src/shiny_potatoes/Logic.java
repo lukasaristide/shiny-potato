@@ -1,7 +1,6 @@
 package shiny_potatoes;
 
 import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.glfw.GLFW;
@@ -13,7 +12,8 @@ public class Logic {
 	int rows = 13, columns = 7;
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(3d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
-	int[] menuCoordsX = new int[4], menuCoordsY = new int[4];
+	int[] menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
+			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4];	//Button 2 - ranking
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
@@ -149,15 +149,20 @@ public class Logic {
 		window = GLFW.glfwCreateWindow(width, height, "Shiny Potatoes", 0, 0);
 		
 		//menu coords
-		menuCoordsX[0] = menuCoordsX[3] = 1;
-		menuCoordsX[1] = menuCoordsX[2] = columns - 1;
-		menuCoordsY[0] = menuCoordsY[1] = 1;
-		menuCoordsY[2] = menuCoordsY[3] = 5;
+		menuButton1CoordsX[0] = menuButton1CoordsX[3] = 1;
+		menuButton1CoordsX[1] = menuButton1CoordsX[2] = columns - 1;
+		menuButton1CoordsY[0] = menuButton1CoordsY[1] = 1;
+		menuButton1CoordsY[2] = menuButton1CoordsY[3] = 5;
+		
+		menuButton2CoordsX[0] = menuButton2CoordsX[3] = 1;
+		menuButton2CoordsX[1] = menuButton2CoordsX[2] = columns - 1;
+		menuButton2CoordsY[0] = menuButton2CoordsY[1] = 6;
+		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 10;
 	}
 }
 
 enum Perspective{
-	game, menu, pause;
+	game, menu, pause, ranking;
 }
 
 class Potato {

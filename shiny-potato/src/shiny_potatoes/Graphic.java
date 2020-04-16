@@ -34,8 +34,15 @@ public class Graphic extends Thread {
 		GL46.glBegin(GL46.GL_POLYGON);
 		GL46.glColor3d(1, 1, 1);
 		for(int i = 0; i < 4; i++)
-			GL46.glVertex2i(resource.menuCoordsX[i], resource.menuCoordsY[i]);
+			GL46.glVertex2i(resource.menuButton1CoordsX[i], resource.menuButton1CoordsY[i]);
 		GL46.glEnd();
+		
+		GL46.glBegin(GL46.GL_POLYGON);
+		GL46.glColor3d(1, 1, 1);
+		for(int i = 0; i < 4; i++)
+			GL46.glVertex2i(resource.menuButton2CoordsX[i], resource.menuButton2CoordsY[i]);
+		GL46.glEnd();
+		
 		GLFW.glfwSwapBuffers(resource.window);
 	}
 	void drawFlyingPotato() {
