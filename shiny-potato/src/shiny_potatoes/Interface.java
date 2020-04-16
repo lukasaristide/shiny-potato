@@ -13,14 +13,14 @@ public class Interface{
 	private Logic resource;
 	private ReentrantLock lock;
 	private ExecutorService executor;
-	private boolean pause;
+	private boolean isPaused;
 	
 	void setMouseButtonCallback() {
 		//this has to be called from the main thread
 		GLFW.glfwSetMouseButtonCallback(resource.window, new GLFWMouseButtonCallbackI() {
 			@Override
 			public void invoke(long window, int button, int action, int mods){
-				if (pause)
+				if (isPaused)
 					return;
 				if (action == GLFW.GLFW_PRESS && button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
 					switch(resource.currentPerspective) {
@@ -61,15 +61,13 @@ public class Interface{
 			@Override
 			public void invoke(long window, int key, int scanode, int action, int mods) {
 				if (action == GLFW.GLFW_PRESS && key == GLFW.GLFW_KEY_ESCAPE) {
-					pause = !pause;
+					isPaused = !isPaused;
 					switch(resource.currentPerspective) {
-					case menu:
-						if (pause)
-							break;
+					case pause:
 						resource.currentPerspective = Perspective.game;
 						break;
 					case game:
-						resource.currentPerspective = Perspective.menu;
+						resource.currentPerspective = Perspective.pause;
 						break;
 					default:
 						break;	
@@ -83,7 +81,7 @@ public class Interface{
 		this.resource = Resource;
 		lock = new ReentrantLock();
 		executor = Executors.newCachedThreadPool();
-		pause = false;
+		isPaused = false;
 		setMouseButtonCallback();
 		setKeyCallback();
 	}

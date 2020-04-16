@@ -138,7 +138,7 @@ public class Logic {
 }
 
 enum Perspective{
-	game, menu;
+	game, menu, pause;
 }
 
 class Potato {
