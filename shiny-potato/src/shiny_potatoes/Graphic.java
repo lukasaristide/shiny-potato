@@ -74,7 +74,41 @@ public class Graphic extends Thread {
 				GL46.glDisable(GL46.GL_TEXTURE_2D);
 			}
 		}
+		drawFlyingPotato();
 		GLFW.glfwSwapBuffers(resource.window);
+	}
+	
+	void drawPauseButton() {
+		GL46.glBegin(GL46.GL_POLYGON);
+		GL46.glColor3d(1, 1, 1);
+		for(int i = 0; i < 4; i++)
+			GL46.glVertex2i(resource.pauseButtonCoordsX[i], resource.pauseButtonCoordsY[i]);
+		GL46.glEnd();
+	}
+	
+	void drawPause() {
+		for(double x = 0; x < w; x++) {
+			for(double y = 0; y < h; y++) {
+				if(!resource.board.get((int)y).get((int)x).isPresent)
+					continue;
+				GL46.glEnable(GL46.GL_TEXTURE_2D);
+				GL46.glBegin(GL46.GL_POLYGON);
+				GL46.glColor3d(1, 1, 1);
+				GL46.glVertex2d(x+0.1, y+0.1);
+				GL46.glVertex2d(x+0.8, y+0.1);
+				GL46.glVertex2d(x+0.8, y+0.8);
+				GL46.glVertex2d(x+0.1, y+0.8);
+				GL46.glEnd();
+				GL46.glDisable(GL46.GL_TEXTURE_2D);
+			}
+		}
+		drawFlyingPotato();
+		drawPauseButton();
+		GLFW.glfwSwapBuffers(resource.window);
+	}
+	
+	void drawRanking() {
+		
 	}
 	
 	@Override
@@ -89,6 +123,12 @@ public class Graphic extends Thread {
 				break;
 			case game:
 				drawGame();
+				break;
+			case pause:
+				drawPause();
+				break;
+			case ranking:
+				drawRanking();
 				break;
 			default:
 				break;	
