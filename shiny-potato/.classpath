@@ -117,5 +117,41 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-javadoc.jar" sourcepath="lib/lwjgl-stb/lwjgl-stb-sources.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-linux-arm32.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-linux-arm64.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-linux.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-windows-x86.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-windows.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
