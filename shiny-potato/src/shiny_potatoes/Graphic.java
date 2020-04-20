@@ -8,7 +8,10 @@ public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
 	double border = 0.1, width = 1;
-
+	Texture[] potatoTextures = new Texture[4];
+	Texture backgroundTexture;
+	Texture menuButton1, menuButton2;
+	
 	void initializeEverything() {
 		// making this window current on this thread
 		GLFW.glfwMakeContextCurrent(resource.window);
