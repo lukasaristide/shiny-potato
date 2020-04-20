@@ -108,7 +108,7 @@ public class Graphic extends Thread {
 	}
 	
 	void drawRanking() {
-		
+		GLFW.glfwSwapBuffers(resource.window);
 	}
 	
 	@Override
