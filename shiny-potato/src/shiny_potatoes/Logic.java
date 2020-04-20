@@ -173,7 +173,7 @@ enum Perspective{
 
 class Potato {
 	boolean isPresent;
-
+	Texture look;
 	Potato() {
 		isPresent = false;
 	}

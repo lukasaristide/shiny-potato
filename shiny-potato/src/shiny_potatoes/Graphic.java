@@ -1,11 +1,5 @@
 package shiny_potatoes;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL46;
@@ -129,26 +123,5 @@ public class Graphic extends Thread {
 		h = resource.rows;
 		w = resource.columns;
 		setDaemon(true);
-	}
-}
-
-class Texture{
-	int id;
-	int width, height;
-	void bind() {
-		GL46.glBindTexture(GL46.GL_TEXTURE_2D, id);
-	}
-	Texture(String filename) throws IOException{
-		BufferedImage x = ImageIO.read(new File(filename));
-		id = GL46.glGenTextures();
-		bind();
-		GL46.glTexParameteri(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_WRAP_S, GL46.GL_CLAMP_TO_EDGE);
-		GL46.glTexParameteri(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_WRAP_T, GL46.GL_CLAMP_TO_EDGE);
-		GL46.glTexParameteri(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_MAG_FILTER, GL46.GL_LINEAR);
-		GL46.glTexParameteri(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_MIN_FILTER, GL46.GL_LINEAR);
-		width = x.getWidth();
-		height = x.getHeight();
-		GL46.glTexImage2D(GL46.GL_TEXTURE_2D, 0, GL46.GL_RGBA, width, height, 0, GL46.GL_RGBA_INTEGER, GL46.GL_INT,
-				x.getRGB(0, 0, width, height, null, 0, width));
 	}
 }
