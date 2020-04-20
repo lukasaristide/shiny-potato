@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL46;
 public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
+	double border = 0.1, width = 1;
 
 	void initializeEverything() {
 		// making this window current on this thread
@@ -43,39 +44,37 @@ public class Graphic extends Thread {
 		for(int i = 0; i < 4; i++)
 			GL46.glVertex2i(resource.menuButton2CoordsX[i], resource.menuButton2CoordsY[i]);
 		GL46.glEnd();
-		
-		GLFW.glfwSwapBuffers(resource.window);
 	}
 	void drawFlyingPotato() {
 		GL46.glEnable(GL46.GL_TEXTURE_2D);
 		GL46.glBegin(GL46.GL_POLYGON);
 		GL46.glColor3d(1, 1, 1);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+0.1, resource.flyingPotatoY.get()+0.1);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+0.8, resource.flyingPotatoY.get()+0.1);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+0.8, resource.flyingPotatoY.get()+0.8);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+0.1, resource.flyingPotatoY.get()+0.8);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+border);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+border);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+width);
+		GL46.glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+width);
 		GL46.glEnd();
 		GL46.glDisable(GL46.GL_TEXTURE_2D);
 	}
 	
 	void drawGame() {
-		for(double x = 0; x < w; x++) {
-			for(double y = 0; y < h; y++) {
+		for(double y = 0; y < h; y++) {
+			for(double x = 1; x < w-1; x++) {
+				double mod = y % 2 == 1 ? 0.25 : -0.25;
 				if(!resource.board.get((int)y).get((int)x).isPresent)
 					continue;
 				GL46.glEnable(GL46.GL_TEXTURE_2D);
 				GL46.glBegin(GL46.GL_POLYGON);
 				GL46.glColor3d(1, 1, 1);
-				GL46.glVertex2d(x+0.1, y+0.1);
-				GL46.glVertex2d(x+0.8, y+0.1);
-				GL46.glVertex2d(x+0.8, y+0.8);
-				GL46.glVertex2d(x+0.1, y+0.8);
+				GL46.glVertex2d(x+border+mod, y+border);
+				GL46.glVertex2d(x+width+mod, y+border);
+				GL46.glVertex2d(x+width+mod, y+width);
+				GL46.glVertex2d(x+border+mod, y+width);
 				GL46.glEnd();
 				GL46.glDisable(GL46.GL_TEXTURE_2D);
 			}
 		}
 		drawFlyingPotato();
-		GLFW.glfwSwapBuffers(resource.window);
 	}
 	
 	void drawPauseButton() {
@@ -87,28 +86,13 @@ public class Graphic extends Thread {
 	}
 	
 	void drawPause() {
-		for(double x = 0; x < w; x++) {
-			for(double y = 0; y < h; y++) {
-				if(!resource.board.get((int)y).get((int)x).isPresent)
-					continue;
-				GL46.glEnable(GL46.GL_TEXTURE_2D);
-				GL46.glBegin(GL46.GL_POLYGON);
-				GL46.glColor3d(1, 1, 1);
-				GL46.glVertex2d(x+0.1, y+0.1);
-				GL46.glVertex2d(x+0.8, y+0.1);
-				GL46.glVertex2d(x+0.8, y+0.8);
-				GL46.glVertex2d(x+0.1, y+0.8);
-				GL46.glEnd();
-				GL46.glDisable(GL46.GL_TEXTURE_2D);
-			}
-		}
-		drawFlyingPotato();
+		drawGame();
 		drawPauseButton();
 		GLFW.glfwSwapBuffers(resource.window);
 	}
 	
 	void drawRanking() {
-		GLFW.glfwSwapBuffers(resource.window);
+		
 	}
 	
 	@Override
@@ -133,6 +117,7 @@ public class Graphic extends Thread {
 			default:
 				break;	
 			}
+			GLFW.glfwSwapBuffers(resource.window);
 			try {
 				sleep(10);
 			} catch (InterruptedException e) { e.printStackTrace(); return;}
