@@ -1,16 +1,28 @@
 package shiny_potatoes;
 
+import java.io.IOException;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL46;
+import static org.lwjgl.opengl.GL46.*;
 
 public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
 	double border = 0.1, width = 1;
-	Texture[] potatoTextures = new Texture[4];
+	Texture[] potatoTextures = new Texture[3];
 	Texture backgroundTexture;
 	Texture menuButton1, menuButton2;
+	
+	void loadTextures() {
+		try {
+			potatoTextures[0] = new Texture("./res/potato1.png");
+			potatoTextures[1] = new Texture("./res/potato2.png");
+			potatoTextures[2] = new Texture("./res/potato3.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	void initializeEverything() {
 		// making this window current on this thread
@@ -18,40 +30,52 @@ public class Graphic extends Thread {
 		// creating capabilities for the current thread
 		GL.createCapabilities();
 		//background is now grey
-		GL46.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		//loading textures
+		loadTextures();
 	}
 
 	void resizeWindow() {	//reenumeration of cooridinates
-		GL46.glViewport(0, 0, resource.width, resource.height);
-		GL46.glMatrixMode(GL46.GL_PROJECTION);
-		GL46.glLoadIdentity();
-		GL46.glOrtho(0, w, h, 0, -1, 1);
-		GL46.glMatrixMode(GL46.GL_MODELVIEW);
+		glViewport(0, 0, resource.width, resource.height);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, w, h, 0, -1, 1);
+		glMatrixMode(GL_MODELVIEW);
 	}
 	
 	void drawMenu() {
-		GL46.glBegin(GL46.GL_POLYGON);
-		GL46.glColor3d(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
 		for(int i = 0; i < 4; i++)
-			GL46.glVertex2i(resource.menuButton1CoordsX[i], resource.menuButton1CoordsY[i]);
-		GL46.glEnd();
+			glVertex2i(resource.menuButton1CoordsX[i], resource.menuButton1CoordsY[i]);
+		glEnd();
 		
-		GL46.glBegin(GL46.GL_POLYGON);
-		GL46.glColor3d(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
 		for(int i = 0; i < 4; i++)
-			GL46.glVertex2i(resource.menuButton2CoordsX[i], resource.menuButton2CoordsY[i]);
-		GL46.glEnd();
+			glVertex2i(resource.menuButton2CoordsX[i], resource.menuButton2CoordsY[i]);
+		glEnd();
 	}
 	void drawFlyingPotato() {
-		GL46.glEnable(GL46.GL_TEXTURE_2D);
-		GL46.glBegin(GL46.GL_POLYGON);
-		GL46.glColor3d(1, 1, 1);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+border);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+border);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+width);
-		GL46.glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+width);
-		GL46.glEnd();
-		GL46.glDisable(GL46.GL_TEXTURE_2D);
+		potatoTextures[resource.currentFlying.get()].bind();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_TEXTURE_2D);
+		
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
+		glTexCoord2d(0d, 0d);
+		glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+border);
+		glTexCoord2d(1d, 0d);
+		glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+border);
+		glTexCoord2d(1d, 1d);
+		glVertex2d(resource.flyingPotatoX.get()+width, resource.flyingPotatoY.get()+width);
+		glTexCoord2d(0d, 1d);
+		glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+width);
+		glEnd();
+		
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
 	}
 	
 	void drawGame() {
@@ -60,26 +84,37 @@ public class Graphic extends Thread {
 				double mod = y % 2 == 1 ? 0.25 : -0.25;
 				if(!resource.board.get((int)y).get((int)x).isPresent)
 					continue;
-				GL46.glEnable(GL46.GL_TEXTURE_2D);
-				GL46.glBegin(GL46.GL_POLYGON);
-				GL46.glColor3d(1, 1, 1);
-				GL46.glVertex2d(x+border+mod, y+border);
-				GL46.glVertex2d(x+width+mod, y+border);
-				GL46.glVertex2d(x+width+mod, y+width);
-				GL46.glVertex2d(x+border+mod, y+width);
-				GL46.glEnd();
-				GL46.glDisable(GL46.GL_TEXTURE_2D);
+				potatoTextures[resource.board.get((int)y).get((int)x).look].bind();
+				
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				
+				glEnable(GL_TEXTURE_2D);
+				glBegin(GL_POLYGON);
+				glColor3d(1, 0, 1);
+				glTexCoord2d(0d, 0d);
+					glVertex2d(x+border+mod, y+border);
+				glTexCoord2d(1d, 0d);
+					glVertex2d(x+width+mod, y+border);
+				glTexCoord2d(1d, 1d);
+					glVertex2d(x+width+mod, y+width);
+				glTexCoord2d(0d, 1d);
+					glVertex2d(x+border+mod, y+width);
+				glEnd();
+				glDisable(GL_TEXTURE_2D);
+				
+				glDisable(GL_BLEND);
 			}
 		}
 		drawFlyingPotato();
 	}
 	
 	void drawPauseButton() {
-		GL46.glBegin(GL46.GL_POLYGON);
-		GL46.glColor3d(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
 		for(int i = 0; i < 4; i++)
-			GL46.glVertex2i(resource.pauseButtonCoordsX[i], resource.pauseButtonCoordsY[i]);
-		GL46.glEnd();
+			glVertex2i(resource.pauseButtonCoordsX[i], resource.pauseButtonCoordsY[i]);
+		glEnd();
 	}
 	
 	void drawPause() {
@@ -97,7 +132,7 @@ public class Graphic extends Thread {
 		initializeEverything();
 		resizeWindow();
 		while (!GLFW.glfwWindowShouldClose(resource.window)) {
-			GL46.glClear(GL46.GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 			switch(resource.currentPerspective) {
 			case menu:
 				drawMenu();
@@ -125,6 +160,6 @@ public class Graphic extends Thread {
 		this.resource = resource;
 		h = resource.rows;
 		w = resource.columns;
-		setDaemon(true);
+		//setDaemon(true);
 	}
 }

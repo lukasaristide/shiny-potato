@@ -14,6 +14,8 @@ public class ShinyPotato {
 		//start of the listener
 		interfac.listen();
 		//terminate lib
+		graphic.stop();
 		GLFW.glfwTerminate();
+		
 	}
 }

@@ -128,7 +128,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-linux.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb-natives-linux.jar" sourcepath="lib/lwjgl-stb/lwjgl-stb-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
 		</attributes>
@@ -148,9 +148,39 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb.jar">
+	<classpathentry kind="lib" path="lib/lwjgl-stb/lwjgl-stb.jar" sourcepath="lib/lwjgl-stb/lwjgl-stb-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/shiny-potato/lib/lwjgl-stb/lwjgl-stb-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/jinput.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/lwjgl_util.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/lwjgl.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/natives-linux.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/natives-windows.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick2d/lib/slick.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/home/aristide/git/shiny-potato/shiny-potato/lib/slick2d/javadoc/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
