@@ -51,6 +51,12 @@ public class Logic {
 					x = columns-1 - x;
 				}
 			}
+			//necessary change when lines are offset
+			if (x == 0)
+				x = 1;
+			else if (x == columns-1)
+				x = columns-2;
+			
 			if (board.elementAt(y).elementAt(x).isPresent) {
 				//this is game over
 				if (y == rows-2)
@@ -64,6 +70,10 @@ public class Logic {
 					diff = -1;
 				}
 				else {
+					//fix for offset lines
+					if (((y%2 == 0 && x < xnew) || (y%2 == 1 && x > xnew)) && 
+							!board.elementAt(y).elementAt(xnew).isPresent)
+						ynew = y;
 					break; //this means the angle was good
 				}
 				while (xnew+diff != x) {
@@ -85,6 +95,7 @@ public class Logic {
 					ynew = y;
 				break;
 			}
+			
 			//don't allow shooting through a line of potatoes
 			boolean under = false, above = false;
 			if (xnew != -1 && ynew != -1) {
