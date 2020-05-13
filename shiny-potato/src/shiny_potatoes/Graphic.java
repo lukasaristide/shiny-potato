@@ -63,7 +63,19 @@ public class Graphic extends Thread {
 		glEnable(GL_TEXTURE_2D);
 		
 		glBegin(GL_POLYGON);
-		glColor3d(1, 0, 0);
+		
+		switch(resource.currentFlying.get()) {
+		case 0:
+			glColor3d(1, 0, 0);
+			break;
+		case 1:
+			glColor3d(0, 1, 0);
+			break;
+		default:
+			glColor3d(0, 0, 1);
+			break;
+		}
+		
 		glTexCoord2d(0d, 0d);
 		glVertex2d(resource.flyingPotatoX.get()+border, resource.flyingPotatoY.get()+border);
 		glTexCoord2d(1d, 0d);
@@ -91,7 +103,19 @@ public class Graphic extends Thread {
 				
 				glEnable(GL_TEXTURE_2D);
 				glBegin(GL_POLYGON);
-				glColor3d(1, 0, 0);
+				
+				switch(resource.board.get((int)y).get((int)x).look) {
+				case 0:
+					glColor3d(1, 0, 0);
+					break;
+				case 1:
+					glColor3d(0, 1, 0);
+					break;
+				default:
+					glColor3d(0, 0, 1);
+					break;
+				}
+				
 				glTexCoord2d(0d, 0d);
 					glVertex2d(x+border+mod, y+border);
 				glTexCoord2d(1d, 0d);
