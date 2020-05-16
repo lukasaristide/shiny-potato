@@ -12,7 +12,7 @@ public class Graphic extends Thread {
 	double border = 0.0, width = 1;
 	Texture[] potatoTextures = new Texture[3];
 	Texture backgroundTexture;
-	Texture menuButton1, menuButton2;
+	Texture menuButton1, menuButton2, pauseButton;
 
 	void loadTextures() {
 		try {
@@ -22,6 +22,7 @@ public class Graphic extends Thread {
 			backgroundTexture = new Texture("./res/field.png");
 			menuButton1 = new Texture("./res/menu1.png");
 			menuButton2 = new Texture("./res/menu2.png");
+			pauseButton = new Texture("./res/pause.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -150,25 +151,15 @@ public class Graphic extends Thread {
 				
 				glBegin(GL_POLYGON);
 
-				switch (resource.board.get((int) y).get((int) x).look) {
-				case 0:
-					glColor3d(1, 0, 0);
-					break;
-				case 1:
-					glColor3d(0, 1, 0);
-					break;
-				default:
-					glColor3d(0, 0, 1);
-					break;
-				}
+				setColorByPotatoNumber(resource.board.get((int) y).get((int) x).look);
 
-				glTexCoord2d(0d, 0d);
+					glTexCoord2d(0d, 0d);
 				glVertex2d(x + border + mod, y + border);
-				glTexCoord2d(1d, 0d);
+					glTexCoord2d(1d, 0d);
 				glVertex2d(x + width + mod, y + border);
-				glTexCoord2d(1d, 1d);
+					glTexCoord2d(1d, 1d);
 				glVertex2d(x + width + mod, y + width);
-				glTexCoord2d(0d, 1d);
+					glTexCoord2d(0d, 1d);
 				glVertex2d(x + border + mod, y + width);
 				glEnd();
 				
@@ -180,11 +171,23 @@ public class Graphic extends Thread {
 	}
 
 	void drawPauseButton() {
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_TEXTURE_2D);
+		pauseButton.bind();
 		glBegin(GL_POLYGON);
 		glColor3d(1, 1, 1);
-		for (int i = 0; i < 4; i++)
-			glVertex2i(resource.pauseButtonCoordsX[i], resource.pauseButtonCoordsY[i]);
+			glTexCoord2d(0d, 0d);
+		glVertex2i(resource.pauseButtonCoordsX[0], resource.pauseButtonCoordsY[0]);
+			glTexCoord2d(0d, 1d);
+		glVertex2i(resource.pauseButtonCoordsX[1], resource.pauseButtonCoordsY[1]);
+			glTexCoord2d(1d, 1d);
+		glVertex2i(resource.pauseButtonCoordsX[2], resource.pauseButtonCoordsY[2]);
+			glTexCoord2d(1d, 0d);
+		glVertex2i(resource.pauseButtonCoordsX[3], resource.pauseButtonCoordsY[3]);
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
 	}
 
 	void drawPause() {
