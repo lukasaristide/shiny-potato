@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL46.*;
 public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
-	double border = 0.1, width = 1;
+	double border = 0.0, width = 1;
 	Texture[] potatoTextures = new Texture[3];
 	Texture backgroundTexture;
 	Texture menuButton1, menuButton2;
