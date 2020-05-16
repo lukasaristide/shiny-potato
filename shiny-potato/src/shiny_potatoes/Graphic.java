@@ -144,7 +144,6 @@ public class Graphic extends Thread {
 	void drawPause() {
 		drawGame();
 		drawPauseButton();
-		GLFW.glfwSwapBuffers(resource.window);
 	}
 	
 	void drawRanking() {
