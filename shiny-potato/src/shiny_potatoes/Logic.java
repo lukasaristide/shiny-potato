@@ -266,12 +266,12 @@ public class Logic {
 		menuButton1CoordsX[0] = menuButton1CoordsX[3] = 1;
 		menuButton1CoordsX[1] = menuButton1CoordsX[2] = columns - 1;
 		menuButton1CoordsY[0] = menuButton1CoordsY[1] = 1;
-		menuButton1CoordsY[2] = menuButton1CoordsY[3] = 5;
+		menuButton1CoordsY[2] = menuButton1CoordsY[3] = 4;
 		
 		menuButton2CoordsX[0] = menuButton2CoordsX[3] = 1;
 		menuButton2CoordsX[1] = menuButton2CoordsX[2] = columns - 1;
-		menuButton2CoordsY[0] = menuButton2CoordsY[1] = 6;
-		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 10;
+		menuButton2CoordsY[0] = menuButton2CoordsY[1] = 5;
+		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 7;
 		
 		pauseButtonCoordsX[0] = pauseButtonCoordsX[3] = 1;
 		pauseButtonCoordsX[1] = pauseButtonCoordsX[2] = columns - 1;
