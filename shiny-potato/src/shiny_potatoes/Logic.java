@@ -118,14 +118,16 @@ public class Logic {
 			}
 			xnew = x;
 			ynew = y;
-			board.elementAt(ynew).elementAt(xnew).isPresent = true;
+			flyingPotatoX.set((double)xnew);
+			flyingPotatoY.set((double)ynew);
 			Thread.sleep(100);
-			board.elementAt(ynew).elementAt(xnew).isPresent = false;
 		}
+		flyingPotatoX.set(4d);
+		flyingPotatoY.set(12d);
 		if (xnew != -1 && ynew != -1) {
 			board.elementAt(ynew).elementAt(xnew).isPresent = true;
-			board.elementAt(ynew).elementAt(xnew).look = board.elementAt(rows-1).elementAt(columns/2).look;
-			board.elementAt(rows-1).elementAt(columns/2).look = (int)(Math.round(Math.random()*10))%3;
+			board.elementAt(ynew).elementAt(xnew).look = currentFlying.get();
+			currentFlying.set((int)(Math.round(Math.random()*10))%3);
 			makePotatoesDisappear(xnew, ynew);
 		}
 		else
@@ -241,9 +243,8 @@ public class Logic {
 			for (int j = 0; j < columns; j++)
 				board.elementAt(i).elementAt(j).isPresent = false;
 		}
-		//this is the shooter and color of the shot potato
-		board.elementAt(rows-1).elementAt(columns/2).isPresent = true;
-		board.elementAt(rows-1).elementAt(columns/2).look = (int)(Math.round(Math.random()*10))%3;
+		//this is the color of the shot potato
+		currentFlying.set((int)(Math.round(Math.random()*10))%3);
 	}
 
 	Logic() {
