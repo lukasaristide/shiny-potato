@@ -12,6 +12,7 @@ public class Logic {
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
 	AtomicInteger currentFlying = new AtomicInteger(0), currentScore = new AtomicInteger(0);
+	AtomicInteger shots = new AtomicInteger(0), parity = new AtomicInteger(0);
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(4d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 	int[] menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
@@ -128,6 +129,9 @@ public class Logic {
 			board.elementAt(ynew).elementAt(xnew).look = currentFlying.get();
 			currentFlying.set((int)(Math.round(Math.random()*10))%3);
 			makePotatoesDisappear(xnew, ynew);
+			if (shots.incrementAndGet() == 3) {
+				addPotatoes();
+			}
 		}
 		else
 			gameOver();
@@ -268,6 +272,29 @@ public class Logic {
 		}*/
 	}
 	
+	void addPotatoes() {
+		shots.set(0);
+		parity.set(parity.get() == 0 ? 1 : 0);
+		for (int i = rows-2; i >= 0; i--) {
+			for (int j = 0; j < columns; j++) {
+				if (board.elementAt(i).elementAt(j).isPresent) {
+					board.elementAt(i+1).elementAt(j).look = board.elementAt(i).elementAt(j).look;
+					board.elementAt(i+1).elementAt(j).isPresent = true;
+					board.elementAt(i).elementAt(j).isPresent = false;
+				}
+			}
+		}
+		for (int i = 0; i < columns; i++) {
+			board.elementAt(0).elementAt(i).look = (int)(Math.round(Math.random()*10))%3;
+			board.elementAt(0).elementAt(i).isPresent = true;
+		}
+		for (int i = 1; i < columns-1; i++) {
+			if (board.elementAt(rows-1).elementAt(i).isPresent) {
+				gameOver();
+			}
+		}
+	}
+	
 	void gameOver() {
 		currentPerspective = Perspective.menu;
 		setBoard();
@@ -275,6 +302,7 @@ public class Logic {
 	
 	void setBoard() {
 		currentScore.set(0);
+		shots.set(0);
 		//start with three rows and rest of the board empty
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < columns; j++) {
