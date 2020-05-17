@@ -19,9 +19,9 @@ public class Interface{
 		//position of the cursor in potatoes
 		int xpot = (int)((xpos*resource.columns + resource.width-1)/resource.width)-1;
 		int ypot = (int)((ypos*resource.rows + resource.height-1)/resource.height)-1;
-		if (xpot < coordsX[0] || xpot > coordsX[1])
+		if (xpot < coordsX[0] || xpot >= coordsX[1])
 			return false;
-		if (ypot < coordsY[0] || ypot > coordsY[2])
+		if (ypot < coordsY[0] || ypot >= coordsY[2])
 			return false;
 		return true;
 	}
