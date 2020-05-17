@@ -11,7 +11,7 @@ public class Logic {
 	long window;
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
-	AtomicInteger currentFlying = new AtomicInteger(0);
+	AtomicInteger currentFlying = new AtomicInteger(0), currentScore = new AtomicInteger(0);
 	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(4d), flyingPotatoY = new AtomicReference<Double>(12d);
 	Vector<Vector<Potato>> board; // this will store potatoes
 	int[] menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
@@ -168,7 +168,11 @@ public class Logic {
 		for(boolean[] i : visited)
 			for(int j = 0; j < columns; j++)
 				i[j] = false;
+		
 		int found = dfs(x,y,color,false, visited);
+		
+		currentScore.addAndGet(found);
+		
 		if(found > 2) {
 			for(boolean[] i : visited)
 				for(int j = 0; j < columns; j++)
@@ -271,6 +275,7 @@ public class Logic {
 	}
 	
 	void setBoard() {
+		currentScore.set(0);
 		//start with three rows and rest of the board empty
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < columns; j++) {
