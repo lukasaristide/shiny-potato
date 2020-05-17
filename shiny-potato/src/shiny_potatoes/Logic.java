@@ -35,6 +35,12 @@ public class Logic {
 		double distance = 0.5, inc = 0.5;
 		//its coefficient
 		double coeff = (ysho-ypot)/(xsho-xpot);
+		if (coeff > 0 && coeff < 0.2) {
+			coeff = 0.2;
+		}
+		else if (coeff < 0 && coeff > -0.2) {
+			coeff = -0.2;
+		}
 		
 		//find first free position - size of potatoes ignored
 		//probably not the best practice - loop stops, when new position is found, or when y is out of bounds
