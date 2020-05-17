@@ -31,12 +31,27 @@ public class Logic {
 			return;
 		//result position of new potato
 		int xnew = -1, ynew = -1;
+		//potato flies on a straight line, its distance from the shooter is increased by inc
+		double distance = 0.5, inc = 0.5;
+		//its coefficient
+		double coeff = (ysho-ypot)/(xsho-xpot);
+		if (coeff > 0 && coeff < 0.2) {
+			coeff = 0.2;
+		}
+		else if (coeff < 0 && coeff > -0.2) {
+			coeff = -0.2;
+		}
+		
 		//find first free position - size of potatoes ignored
-		for (double y = rows-2; y >= 0; y--) {
-			double x = (((xsho-xpot)*(y-ypot))/(ysho-ypot))+xpot;
+		//probably not the best practice - loop stops, when new position is found, or when y is out of bounds
+		while (true) {
+			double x = (columns/2)-((coeff > 0 ? 1 : -1)*(distance/Math.sqrt(coeff*coeff+1)));
+			double y = rows-1-Math.abs(coeff*(((distance/Math.sqrt(coeff*coeff+1)))));
+			if (y < 0)
+				break;
 			//fix when x is out of bounds
 			if (x >= columns) {
-				if ((x/(columns-1))%2 == 0) {
+				if ((((int)x)/(columns-1))%2 == 0) {
 					x = x%(columns-1);
 				}
 				else {
@@ -61,7 +76,7 @@ public class Logic {
 			
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
 				//this is game over
-				if (y == rows-2)
+				if (y < rows-3)
 					break;
 				//additional fix for too small shooting angles
 				int diff = 0;
@@ -73,13 +88,13 @@ public class Logic {
 				}
 				else {
 					//fix for offset lines
-					if (((y%2 == 0 && x < xnew) || (y%2 == 1 && x > xnew)) && 
-							!board.elementAt((int)y).elementAt(xnew).isPresent)
+					if (((((int)y+parity.get())%2 == 0 && x < xnew) || (((int)y+parity.get())%2 == 1 && x > xnew)) &&
+							xnew != -1 && !board.elementAt((int)y).elementAt(xnew).isPresent)
 						ynew = (int)y;
 					break; //this means the angle was good
 				}
 				while (xnew+diff != x) {
-					if (board.elementAt((int)y).elementAt(xnew).isPresent)
+					if (xnew != -1 && board.elementAt((int)y).elementAt(xnew).isPresent)
 						break;
 					else if (ynew != -1 && board.elementAt(ynew).elementAt(xnew+diff).isPresent)
 						break;
@@ -120,7 +135,8 @@ public class Logic {
 			ynew = (int)y;
 			flyingPotatoX.set(x);
 			flyingPotatoY.set(y);
-			Thread.sleep(100);
+			Thread.sleep(25);
+			distance += inc;
 		}
 		flyingPotatoX.set(4d);
 		flyingPotatoY.set(12d);
@@ -181,94 +197,6 @@ public class Logic {
 					i[j] = false;
 			dfs(x,y,color,true, visited);
 		}
-		/*Vector<Vector<Integer>> sameColorAbove = new Vector<Vector<Integer>>();
-		sameColorAbove.add(new Vector<Integer>());
-		sameColorAbove.elementAt(0).add(x);
-		//find all potatoes in the same line as shot connected to it and of the same color
-		int temp = x;
-		while (temp > 1 && board.elementAt(y).elementAt(temp-1).isPresent && 
-				board.elementAt(y).elementAt(temp-1).look == 
-				board.elementAt(y).elementAt(temp).look) {
-			sameColorAbove.elementAt(0).add(temp-1);
-			temp--;
-		}
-		temp = x;
-		while (temp < columns-1 && board.elementAt(y).elementAt(temp+1).isPresent && 
-				board.elementAt(y).elementAt(temp+1).look == 
-				board.elementAt(y).elementAt(temp).look) {
-			sameColorAbove.elementAt(0).add(temp+1);
-			temp++;
-		}
-		int amount = sameColorAbove.elementAt(0).size();
-		//find all potatoes above shot connected to it and of the same color
-		while (y-sameColorAbove.size()-1 > 0 && sameColorAbove.elementAt(sameColorAbove.size()-1).size() > 0) {
-			sameColorAbove.add(new Vector<Integer>());
-			for (int i = 0; i < sameColorAbove.elementAt(sameColorAbove.size()-2).size(); i++) {
-				x = sameColorAbove.elementAt(sameColorAbove.size()-2).elementAt(i);
-				if (board.elementAt(y-sameColorAbove.size()+1).elementAt(x).isPresent &&
-						board.elementAt(y-sameColorAbove.size()+1).elementAt(x).look == 
-						board.elementAt(y-sameColorAbove.size()+2).elementAt(x).look) {
-					sameColorAbove.elementAt(sameColorAbove.size()-1).add(x);
-				}
-				if (y-sameColorAbove.size()%2 == 1) {
-					if (x > 1 && board.elementAt(y-sameColorAbove.size()+1).elementAt(x-1).isPresent && 
-							board.elementAt(y-sameColorAbove.size()+1).elementAt(x-1).look == 
-							board.elementAt(y-sameColorAbove.size()+2).elementAt(x).look) {
-						sameColorAbove.elementAt(sameColorAbove.size()-1).add(x-1);
-					}
-				}
-				else {
-					if (x < columns-2 && board.elementAt(y-sameColorAbove.size()+1).elementAt(x+1).isPresent && 
-							board.elementAt(y-sameColorAbove.size()+1).elementAt(x+1).look == 
-							board.elementAt(y-sameColorAbove.size()+2).elementAt(x).look) {
-						sameColorAbove.elementAt(sameColorAbove.size()-1).add(x+1);
-					}
-				}
-			}
-			amount += sameColorAbove.elementAt(sameColorAbove.size()-1).size();
-		}
-		//find all potatoes below shot connected to it and of the same color
-		//basically it's the above code copied, so it would be good to merge it to one
-		Vector<Vector<Integer>> sameColorBelow = new Vector<Vector<Integer>>();
-		sameColorBelow.add(sameColorAbove.elementAt(0));
-		while (y+sameColorBelow.size() < rows && sameColorBelow.elementAt(sameColorBelow.size()-1).size() > 0) {
-			sameColorBelow.add(new Vector<Integer>());
-			for (int i = 0; i < sameColorBelow.elementAt(sameColorBelow.size()-2).size(); i++) {
-				x = sameColorBelow.elementAt(sameColorBelow.size()-2).elementAt(i);
-				if (board.elementAt(y+sameColorBelow.size()-1).elementAt(x).isPresent &&
-						board.elementAt(y+sameColorBelow.size()-1).elementAt(x).look == 
-						board.elementAt(y+sameColorBelow.size()-2).elementAt(x).look) {
-					sameColorBelow.elementAt(sameColorBelow.size()-1).add(x);
-				}
-				if (y-sameColorBelow.size()%2 == 1) {
-					if (x > 1 && board.elementAt(y+sameColorBelow.size()-1).elementAt(x-1).isPresent && 
-							board.elementAt(y+sameColorBelow.size()-1).elementAt(x-1).look == 
-							board.elementAt(y+sameColorBelow.size()-2).elementAt(x).look) {
-						sameColorBelow.elementAt(sameColorBelow.size()-1).add(x-1);
-					}
-				}
-				else {
-					if (x < columns-2 && board.elementAt(y+sameColorBelow.size()-1).elementAt(x+1).isPresent && 
-							board.elementAt(y+sameColorBelow.size()-1).elementAt(x+1).look == 
-							board.elementAt(y+sameColorBelow.size()-2).elementAt(x).look) {
-						sameColorBelow.elementAt(sameColorBelow.size()-1).add(x+1);
-					}
-				}
-			}
-			amount += sameColorBelow.elementAt(sameColorBelow.size()-1).size();
-		}
-		if (amount >= 3) {
-			for (int i = 0; i < sameColorAbove.size(); i++) {
-				for (int j = 0; j < sameColorAbove.elementAt(i).size(); j++) {
-					board.elementAt(y-i).elementAt(sameColorAbove.elementAt(i).elementAt(j)).isPresent = false;
-				}
-			}
-			for (int i = 0; i < sameColorBelow.size(); i++) {
-				for (int j = 0; j < sameColorBelow.elementAt(i).size(); j++) {
-					board.elementAt(y+i).elementAt(sameColorBelow.elementAt(i).elementAt(j)).isPresent = false;
-				}
-			}
-		}*/
 	}
 	
 	void addPotatoes() {
@@ -302,6 +230,7 @@ public class Logic {
 	void setBoard() {
 		currentScore.set(0);
 		shots.set(0);
+		parity.set(0);
 		//start with three rows and rest of the board empty
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < columns; j++) {
