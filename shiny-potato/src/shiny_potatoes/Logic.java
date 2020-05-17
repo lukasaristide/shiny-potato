@@ -155,7 +155,7 @@ public class Logic {
 	
 	int dfs(int x, int y, int color, boolean pop, boolean[][] visited) {
 		int howManyofThisColor = 1;
-		if(visited[y][x])
+		if(visited[y][x] || x >= columns-1 || x < 1)
 			return 0;
 		visited[y][x] = true;
 		if(y > 0) {
@@ -260,6 +260,7 @@ public class Logic {
 		// lib initialization
 		GLFW.glfwInit();
 		// window creation
+		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE);
 		window = GLFW.glfwCreateWindow(width, height, "Shiny Potatoes", 0, 0);
 		
 		//menu coords
