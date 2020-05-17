@@ -134,8 +134,48 @@ public class Logic {
 			gameOver();
 	}
 	
+	int dfs(int x, int y, int color, boolean pop, boolean[][] visited) {
+		int howManyofThisColor = 1;
+		if(visited[y][x])
+			return 0;
+		visited[y][x] = true;
+		if(y > 0) {
+			if(board.get(y-1).get(x).isPresent && board.get(y-1).get(x).look == color)
+				howManyofThisColor += dfs(x,y-1,color,pop, visited);
+			int mod = y % 2 == 0 ? -1 : 1;
+			if(x+mod > 0 && x+mod < columns-1 && board.get(y-1).get(x+mod).isPresent && board.get(y-1).get(x+mod).look == color)
+				howManyofThisColor += dfs(x+mod,y-1,color,pop, visited);
+		}
+		if(x > 1 && board.get(y).get(x-1).isPresent && board.get(y).get(x-1).look == color)
+			howManyofThisColor += dfs(x-1, y, color, pop, visited);
+		if(x < columns-1 && board.get(y).get(x+1).isPresent && board.get(y).get(x+1).look == color)
+			howManyofThisColor += dfs(x+1, y, color, pop, visited);
+		if(y < rows) {
+			if(board.get(y+1).get(x).isPresent && board.get(y+1).get(x).look == color)
+				howManyofThisColor += dfs(x,y+1,color,pop, visited);
+			int mod = y % 2 == 0 ? -1 : 1;
+			if(x+mod > 0 && x+mod < columns-1 && board.get(y+1).get(x+mod).isPresent && board.get(y+1).get(x+mod).look == color)
+				howManyofThisColor += dfs(x+mod,y+1,color,pop, visited);
+		}
+		if(pop)
+			board.get(y).get(x).isPresent = false;
+		return howManyofThisColor;
+	}
+	
 	void makePotatoesDisappear(int x, int y) {
-		Vector<Vector<Integer>> sameColorAbove = new Vector<Vector<Integer>>();
+		int color = board.get(y).get(x).look;
+		boolean[][] visited = new boolean[rows][columns];
+		for(boolean[] i : visited)
+			for(int j = 0; j < columns; j++)
+				i[j] = false;
+		int found = dfs(x,y,color,false, visited);
+		if(found > 2) {
+			for(boolean[] i : visited)
+				for(int j = 0; j < columns; j++)
+					i[j] = false;
+			dfs(x,y,color,true, visited);
+		}
+		/*Vector<Vector<Integer>> sameColorAbove = new Vector<Vector<Integer>>();
 		sameColorAbove.add(new Vector<Integer>());
 		sameColorAbove.elementAt(0).add(x);
 		//find all potatoes in the same line as shot connected to it and of the same color
@@ -222,7 +262,7 @@ public class Logic {
 					board.elementAt(y+i).elementAt(sameColorBelow.elementAt(i).elementAt(j)).isPresent = false;
 				}
 			}
-		}
+		}*/
 	}
 	
 	void gameOver() {
