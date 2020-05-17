@@ -31,8 +31,6 @@ public class Interface{
 		GLFW.glfwSetMouseButtonCallback(resource.window, new GLFWMouseButtonCallbackI() {
 			@Override
 			public void invoke(long window, int button, int action, int mods){
-				if (isPaused)
-					return;
 				if (action == GLFW.GLFW_PRESS && button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
 					double xpos[] = new double[1], ypos[] = new double[1];
 					GLFW.glfwGetCursorPos(resource.window, xpos, ypos);
@@ -61,6 +59,12 @@ public class Interface{
 								}
 							}
 						});
+						break;
+					case pause:
+						if (isInBounds(xpos[0], ypos[0], resource.pauseButtonCoordsX, resource.pauseButtonCoordsY)) {
+							resource.currentPerspective = Perspective.menu;
+							resource.setBoard();
+						}
 						break;
 					default:
 						break;	
