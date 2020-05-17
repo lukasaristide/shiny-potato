@@ -8,14 +8,24 @@ import org.lwjgl.glfw.GLFW;
 
 public class Logic {
 	Perspective currentPerspective = Perspective.menu;
+	
 	long window;
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
-	AtomicInteger currentFlying = new AtomicInteger(0), currentScore = new AtomicInteger(0);
-	AtomicInteger shots = new AtomicInteger(0), parity = new AtomicInteger(0);
-	AtomicReference<Double> flyingPotatoX = new AtomicReference<Double>(4d), flyingPotatoY = new AtomicReference<Double>(12d);
+	
+	AtomicInteger
+			currentFlying = new AtomicInteger(0), 
+			currentScore = new AtomicInteger(0),
+			shots = new AtomicInteger(0), 
+			parity = new AtomicInteger(0);
+	
+	AtomicReference<Double> 
+			flyingPotatoX = new AtomicReference<Double>(4d), 
+			flyingPotatoY = new AtomicReference<Double>(12d);
+	
 	Vector<Vector<Potato>> board; // this will store potatoes
-	int[] menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
+	
+	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
 			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],
 			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];	//Button2 - ranking
 	

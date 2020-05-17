@@ -9,23 +9,23 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
-public class Interface{
+public class Interface {
 	private Logic resource;
 	private ReentrantLock lock;
 	private ExecutorService executor;
 	private boolean isPaused;
-	
+
 	boolean isInBounds(double xpos, double ypos, int[] coordsX, int[] coordsY) {
-		//position of the cursor in potatoes
-		int xpot = (int)((xpos*resource.columns + resource.width-1)/resource.width)-1;
-		int ypot = (int)((ypos*resource.rows + resource.height-1)/resource.height)-1;
+		// position of the cursor in potatoes
+		int xpot = (int) ((xpos * resource.columns + resource.width - 1) / resource.width) - 1;
+		int ypot = (int) ((ypos * resource.rows + resource.height - 1) / resource.height) - 1;
 		if (xpot < coordsX[0] || xpot >= coordsX[1])
 			return false;
 		if (ypot < coordsY[0] || ypot >= coordsY[2])
 			return false;
 		return true;
 	}
-	
+
 	void setMouseButtonCallback() {
 		//this has to be called from the main thread
 		GLFW.glfwSetMouseButtonCallback(resource.window, new GLFWMouseButtonCallbackI() {
@@ -73,13 +73,13 @@ public class Interface{
 			}
 		});
 	}
-	
+
 	void setKeyCallback() {
 		GLFW.glfwSetKeyCallback(resource.window, new GLFWKeyCallbackI() {
 			@Override
 			public void invoke(long window, int key, int scanode, int action, int mods) {
 				if (action == GLFW.GLFW_PRESS && key == GLFW.GLFW_KEY_ESCAPE) {
-					switch(resource.currentPerspective) {
+					switch (resource.currentPerspective) {
 					case pause:
 						isPaused = !isPaused;
 						resource.currentPerspective = Perspective.game;
@@ -91,15 +91,15 @@ public class Interface{
 					case ranking:
 						resource.currentPerspective = Perspective.menu;
 					default:
-						break;	
+						break;
 					}
 				}
 			}
 		});
 	}
-	
+
 	void listen() {
-		while(!GLFW.glfwWindowShouldClose(resource.window))
+		while (!GLFW.glfwWindowShouldClose(resource.window))
 			GLFW.glfwWaitEvents();
 		GLFW.glfwDestroyWindow(resource.window);
 	}
