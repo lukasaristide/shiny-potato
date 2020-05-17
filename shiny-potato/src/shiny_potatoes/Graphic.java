@@ -10,7 +10,7 @@ public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
 	double border = 0.0, width = 1;
-	Texture[] potatoTextures = new Texture[3];
+	Texture[] potatoTextures = new Texture[3], shooter = new Texture[2];
 	Texture backgroundTexture;
 	Texture menuButton1, menuButton2, pauseButton;
 
@@ -23,6 +23,8 @@ public class Graphic extends Thread {
 			menuButton1 = new Texture("./res/menu1.png");
 			menuButton2 = new Texture("./res/menu2.png");
 			pauseButton = new Texture("./res/pause.png");
+			shooter[0] = new Texture("./res/shooter1.png");
+			shooter[1] = new Texture("./res/shooter2.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,24 +116,45 @@ public class Graphic extends Thread {
 		
 	}
 
-	void drawFlyingPotato() {
-		potatoTextures[resource.currentFlying.get()].bind();
+	void drawShooterAndFlyingPotato() {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
-
+		
+		double coordX = resource.flyingPotatoX.get(), coordY = resource.flyingPotatoY.get(), curWidth = width, curBorder = border;
+		if(coordX == 4 && coordY == 12) {
+			curWidth = 0.5;
+			curBorder = 0.3;
+		}		
+		
+		shooter[coordX == 4 && coordY == 12 ? 1 : 0].bind();
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
+		glTexCoord2d(0d, 0d);
+		glVertex2d(4, 12);
+		glTexCoord2d(1d, 0d);
+		glVertex2d(4 + width, 12);
+		glTexCoord2d(1d, 1d);
+		glVertex2d(4 + width, 12 + width);
+		glTexCoord2d(0d, 1d);
+		glVertex2d(4, 12 + width);
+		glEnd();
+		
+		potatoTextures[resource.currentFlying.get()].bind();
 		glBegin(GL_POLYGON);
 
 		setColorByPotatoNumber(resource.currentFlying.get());
-
+		
+			
+		
 		glTexCoord2d(0d, 0d);
-		glVertex2d(resource.flyingPotatoX.get() + border, resource.flyingPotatoY.get() + border);
+		glVertex2d(coordX + curBorder, coordY);
 		glTexCoord2d(1d, 0d);
-		glVertex2d(resource.flyingPotatoX.get() + width, resource.flyingPotatoY.get() + border);
+		glVertex2d(coordX + curBorder + curWidth, coordY);
 		glTexCoord2d(1d, 1d);
-		glVertex2d(resource.flyingPotatoX.get() + width, resource.flyingPotatoY.get() + width);
+		glVertex2d(coordX + curBorder + curWidth, coordY + curWidth);
 		glTexCoord2d(0d, 1d);
-		glVertex2d(resource.flyingPotatoX.get() + border, resource.flyingPotatoY.get() + width);
+		glVertex2d(coordX + curBorder, coordY + curWidth);
 		glEnd();
 
 		glDisable(GL_TEXTURE_2D);
@@ -167,7 +190,7 @@ public class Graphic extends Thread {
 		}
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
-		drawFlyingPotato();
+		drawShooterAndFlyingPotato();
 	}
 
 	void drawPauseButton() {
