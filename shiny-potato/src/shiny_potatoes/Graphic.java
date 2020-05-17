@@ -1,7 +1,6 @@
 package shiny_potatoes;
 
 import java.io.IOException;
-
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL46.*;
@@ -13,6 +12,7 @@ public class Graphic extends Thread {
 	Texture[] potatoTextures = new Texture[3], shooter = new Texture[2];
 	Texture backgroundTexture;
 	Texture menuButton1, menuButton2, pauseButton;
+	Texture[] digit = new Texture[10];
 
 	void loadTextures() {
 		try {
@@ -25,6 +25,8 @@ public class Graphic extends Thread {
 			pauseButton = new Texture("./res/pause.png");
 			shooter[0] = new Texture("./res/shooter1.png");
 			shooter[1] = new Texture("./res/shooter2.png");
+			for(int i = 0; i < 10; i++)
+				digit[i] = new Texture("./res/shooter"+i+".png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,11 +78,11 @@ public class Graphic extends Thread {
 		glColor3d(0.5, 0.5, 0.8);
 			glTexCoord2d(0d, 0d);
 		glVertex2i(resource.menuButton1CoordsX[0], resource.menuButton1CoordsY[0]);
-			glTexCoord2d(0d, 1d);
+			glTexCoord2d(1d, 0d);
 		glVertex2i(resource.menuButton1CoordsX[1], resource.menuButton1CoordsY[1]);
 			glTexCoord2d(1d, 1d);
 		glVertex2i(resource.menuButton1CoordsX[2], resource.menuButton1CoordsY[2]);
-			glTexCoord2d(1d, 0d);
+			glTexCoord2d(0d, 1d);
 		glVertex2i(resource.menuButton1CoordsX[3], resource.menuButton1CoordsY[3]);
 		glEnd();
 		
@@ -89,11 +91,11 @@ public class Graphic extends Thread {
 		glColor3d(0.5, 0.5, 0.8);
 			glTexCoord2d(0, 0);
 		glVertex2i(resource.menuButton2CoordsX[0], resource.menuButton2CoordsY[0]);
-			glTexCoord2d(0, 1);
+			glTexCoord2d(1, 0);
 		glVertex2i(resource.menuButton2CoordsX[1], resource.menuButton2CoordsY[1]);
 			glTexCoord2d(1, 1);
 		glVertex2i(resource.menuButton2CoordsX[2], resource.menuButton2CoordsY[2]);
-			glTexCoord2d(1, 0);
+			glTexCoord2d(0, 1);
 		glVertex2i(resource.menuButton2CoordsX[3], resource.menuButton2CoordsY[3]);
 		glEnd();
 		
@@ -144,9 +146,7 @@ public class Graphic extends Thread {
 		glBegin(GL_POLYGON);
 
 		setColorByPotatoNumber(resource.currentFlying.get());
-		
-			
-		
+	
 		glTexCoord2d(0d, 0d);
 		glVertex2d(coordX + curBorder, coordY);
 		glTexCoord2d(1d, 0d);
@@ -167,7 +167,7 @@ public class Graphic extends Thread {
 		glEnable(GL_TEXTURE_2D);
 		for (double y = 0; y < h; y++) {
 			for (double x = 1; x < w - 1; x++) {
-				double mod = y % 2 == 1 ? 0.25 : -0.25;
+				double mod = (y + resource.parity.get()) % 2 == 1 ? 0.25 : -0.25;
 				if (!resource.board.get((int) y).get((int) x).isPresent)
 					continue;
 				potatoTextures[resource.board.get((int) y).get((int) x).look].bind();
@@ -202,13 +202,14 @@ public class Graphic extends Thread {
 		glColor3d(1, 1, 1);
 			glTexCoord2d(0d, 0d);
 		glVertex2i(resource.pauseButtonCoordsX[0], resource.pauseButtonCoordsY[0]);
-			glTexCoord2d(0d, 1d);
+			glTexCoord2d(1d, 0d);
 		glVertex2i(resource.pauseButtonCoordsX[1], resource.pauseButtonCoordsY[1]);
 			glTexCoord2d(1d, 1d);
 		glVertex2i(resource.pauseButtonCoordsX[2], resource.pauseButtonCoordsY[2]);
-			glTexCoord2d(1d, 0d);
+			glTexCoord2d(0d, 1d);
 		glVertex2i(resource.pauseButtonCoordsX[3], resource.pauseButtonCoordsY[3]);
 		glEnd();
+		//write digits
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 	}

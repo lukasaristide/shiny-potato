@@ -145,19 +145,19 @@ public class Logic {
 		if(y > 0) {
 			if(board.get(y-1).get(x).isPresent && board.get(y-1).get(x).look == color)
 				howManyofThisColor += dfs(x,y-1,color,pop, visited);
-			int mod = y % 2 == 0 ? -1 : 1;
-			if(x+mod > 0 && x+mod < columns-1 && board.get(y-1).get(x+mod).isPresent && board.get(y-1).get(x+mod).look == color)
+			int mod = (y + parity.get()) % 2 == 0 ? -1 : 1;
+			if(x+mod > 0 && x+mod < columns-2 && board.get(y-1).get(x+mod).isPresent && board.get(y-1).get(x+mod).look == color)
 				howManyofThisColor += dfs(x+mod,y-1,color,pop, visited);
 		}
 		if(x > 1 && board.get(y).get(x-1).isPresent && board.get(y).get(x-1).look == color)
 			howManyofThisColor += dfs(x-1, y, color, pop, visited);
-		if(x < columns-1 && board.get(y).get(x+1).isPresent && board.get(y).get(x+1).look == color)
+		if(x < columns-2 && board.get(y).get(x+1).isPresent && board.get(y).get(x+1).look == color)
 			howManyofThisColor += dfs(x+1, y, color, pop, visited);
 		if(y < rows) {
 			if(board.get(y+1).get(x).isPresent && board.get(y+1).get(x).look == color)
 				howManyofThisColor += dfs(x,y+1,color,pop, visited);
-			int mod = y % 2 == 0 ? -1 : 1;
-			if(x+mod > 0 && x+mod < columns-1 && board.get(y+1).get(x+mod).isPresent && board.get(y+1).get(x+mod).look == color)
+			int mod = (y + parity.get()) % 2 == 0 ? -1 : 1;
+			if(x+mod > 0 && x+mod < columns-2 && board.get(y+1).get(x+mod).isPresent && board.get(y+1).get(x+mod).look == color)
 				howManyofThisColor += dfs(x+mod,y+1,color,pop, visited);
 		}
 		if(pop)
