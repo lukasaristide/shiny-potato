@@ -20,20 +20,19 @@ public class Logic {
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
-		int xpot = (int)((xpos*columns + width-1)/width)-1;
-		int ypot = (int)((ypos*rows + height-1)/height)-1;
+		double xpot = ((xpos*columns + width-1)/width)-1;
+		double ypot = ((ypos*rows + height-1)/height)-1;
 		//position of the shooter
-		int xsho = columns/2;
-		int ysho = rows-1;
-		//don't allow shooting at the level of the shooter
-		//it causes division by zero
-		if (ypot == ysho)
+		double xsho = columns/2;
+		double ysho = rows-1;
+		//don't allow shooting below the level of the shooter
+		if (ypot >= ysho)
 			return;
 		//result position of new potato
 		int xnew = -1, ynew = -1;
 		//find first free position - size of potatoes ignored
-		for (int y = rows-2; y >= 0; y--) {
-			int x = (((xsho-xpot)*(y-ypot))/(ysho-ypot))+xpot;
+		for (double y = rows-2; y >= 0; y--) {
+			double x = (((xsho-xpot)*(y-ypot))/(ysho-ypot))+xpot;
 			//fix when x is out of bounds
 			if (x >= columns) {
 				if ((x/(columns-1))%2 == 0) {
@@ -54,12 +53,12 @@ public class Logic {
 				}
 			}
 			//necessary change when lines are offset
-			if (x == 0)
+			if (x < 1)
 				x = 1;
-			else if (x == columns-1)
+			else if (x > columns-2)
 				x = columns-2;
 			
-			if (board.elementAt(y).elementAt(x).isPresent) {
+			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
 				//this is game over
 				if (y == rows-2)
 					break;
@@ -74,12 +73,12 @@ public class Logic {
 				else {
 					//fix for offset lines
 					if (((y%2 == 0 && x < xnew) || (y%2 == 1 && x > xnew)) && 
-							!board.elementAt(y).elementAt(xnew).isPresent)
-						ynew = y;
+							!board.elementAt((int)y).elementAt(xnew).isPresent)
+						ynew = (int)y;
 					break; //this means the angle was good
 				}
 				while (xnew+diff != x) {
-					if (board.elementAt(y).elementAt(xnew).isPresent)
+					if (board.elementAt((int)y).elementAt(xnew).isPresent)
 						break;
 					else if (ynew != -1 && board.elementAt(ynew).elementAt(xnew+diff).isPresent)
 						break;
@@ -93,19 +92,19 @@ public class Logic {
 						break;
 					}
 				}
-				if (!board.elementAt(y).elementAt(xnew).isPresent)
-					ynew = y;
+				if (!board.elementAt((int)y).elementAt(xnew).isPresent)
+					ynew = (int)y;
 				break;
 			}
 			
 			//don't allow shooting through a line of potatoes
 			boolean under = false, above = false;
 			if (xnew != -1 && ynew != -1) {
-				for (int i = Math.min(x, xnew); i <= Math.max(x, xnew); i++) {
+				for (int i = Math.min((int)x, xnew); i <= Math.max((int)x, xnew); i++) {
 					if (!under && board.elementAt(ynew).elementAt(i).isPresent){
 						under = true;
 					}
-					if (!above && board.elementAt(y).elementAt(i).isPresent){
+					if (!above && board.elementAt((int)y).elementAt(i).isPresent){
 						above = true;
 					}
 					if (under && above) {
@@ -116,10 +115,10 @@ public class Logic {
 			if (under && above) {
 				break;
 			}
-			xnew = x;
-			ynew = y;
-			flyingPotatoX.set((double)xnew);
-			flyingPotatoY.set((double)ynew);
+			xnew = (int)x;
+			ynew = (int)y;
+			flyingPotatoX.set(x);
+			flyingPotatoY.set(y);
 			Thread.sleep(100);
 		}
 		flyingPotatoX.set(4d);
