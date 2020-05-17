@@ -26,7 +26,7 @@ public class Graphic extends Thread {
 			shooter[0] = new Texture("./res/shooter1.png");
 			shooter[1] = new Texture("./res/shooter2.png");
 			for(int i = 0; i < 10; i++)
-				digit[i] = new Texture("./res/shooter"+i+".png");
+				digit[i] = new Texture("./res/"+i+".png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -209,6 +209,25 @@ public class Graphic extends Thread {
 			glTexCoord2d(0d, 1d);
 		glVertex2i(resource.pauseButtonCoordsX[3], resource.pauseButtonCoordsY[3]);
 		glEnd();
+		
+		int current = resource.currentScore.get();
+		double coordY = ((double)resource.pauseButtonCoordsY[0] + resource.pauseButtonCoordsY[2])/2;
+		for(int i = resource.pauseButtonCoordsX[1] - 1; i >= resource.pauseButtonCoordsX[0] + 1; i--, current /= 10) {
+			int toWrite = current%10;
+			digit[toWrite].bind();
+			glBegin(GL_POLYGON);
+			glColor3d(1, 1, 1);
+				glTexCoord2d(0d, 0d);
+			glVertex2d(i-0.5, coordY);
+				glTexCoord2d(1d, 0d);
+			glVertex2d(i+0.5, coordY);
+				glTexCoord2d(1d, 1d);
+			glVertex2d(i+0.5, coordY+1);
+				glTexCoord2d(0d, 1d);
+			glVertex2d(i-0.5, coordY+1);
+			glEnd();
+		}
+		
 		//write digits
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);

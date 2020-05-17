@@ -174,9 +174,8 @@ public class Logic {
 		
 		int found = dfs(x,y,color,false, visited);
 		
-		currentScore.addAndGet(found);
-		
 		if(found > 2) {
+			currentScore.addAndGet(found);
 			for(boolean[] i : visited)
 				for(int j = 0; j < columns; j++)
 					i[j] = false;
