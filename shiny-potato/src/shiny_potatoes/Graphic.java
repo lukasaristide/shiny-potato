@@ -129,19 +129,6 @@ public class Graphic extends Thread {
 			curBorder = 0.3;
 		}		
 		
-		shooter[coordX == 4 && coordY == 12 ? 1 : 0].bind();
-		glBegin(GL_POLYGON);
-		glColor3d(1, 1, 1);
-		glTexCoord2d(0d, 0d);
-		glVertex2d(4, 12);
-		glTexCoord2d(1d, 0d);
-		glVertex2d(4 + width, 12);
-		glTexCoord2d(1d, 1d);
-		glVertex2d(4 + width, 12 + width);
-		glTexCoord2d(0d, 1d);
-		glVertex2d(4, 12 + width);
-		glEnd();
-		
 		potatoTextures[resource.currentFlying.get()].bind();
 		glBegin(GL_POLYGON);
 
@@ -157,6 +144,19 @@ public class Graphic extends Thread {
 		glVertex2d(coordX + curBorder, coordY + curWidth);
 		glEnd();
 
+		shooter[coordX == 4 && coordY == 12 ? 1 : 0].bind();
+		glBegin(GL_POLYGON);
+		glColor3d(1, 1, 1);
+		glTexCoord2d(0d, 0d);
+		glVertex2d(4, 12);
+		glTexCoord2d(1d, 0d);
+		glVertex2d(4 + width, 12);
+		glTexCoord2d(1d, 1d);
+		glVertex2d(4 + width, 12 + width);
+		glTexCoord2d(0d, 1d);
+		glVertex2d(4, 12 + width);
+		glEnd();
+		
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 	}
