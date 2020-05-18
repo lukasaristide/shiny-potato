@@ -86,40 +86,23 @@ public class Logic {
 			
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
 				//this is game over
-				if (y < rows-3)
+				if (xnew == -1 || ynew == -1)
 					break;
-				//additional fix for too small shooting angles
-				int diff = 0;
-				if ((x-xnew) > 1) {
-					diff = 1;
-				}
-				else if ((xnew-x) > 1) {
-					diff = -1;
+				//don't stop unconnected
+				if (((int)y+parity.get())%2 == 1) {
+					if (ynew > (int)y && xnew < (int)x && xnew+1 <= columns-2 &&
+							!board.elementAt((int)y).elementAt(xnew).isPresent &&
+							!board.elementAt(ynew).elementAt(xnew+1).isPresent) {
+						xnew += 1;
+					}
 				}
 				else {
-					//fix for offset lines
-					if (((((int)y+parity.get())%2 == 0 && x < xnew) || (((int)y+parity.get())%2 == 1 && x > xnew)) &&
-							xnew != -1 && !board.elementAt((int)y).elementAt(xnew).isPresent)
-						ynew = (int)y;
-					break; //this means the angle was good
-				}
-				while (xnew+diff != x) {
-					if (xnew != -1 && board.elementAt((int)y).elementAt(xnew).isPresent)
-						break;
-					else if (ynew != -1 && board.elementAt(ynew).elementAt(xnew+diff).isPresent)
-						break;
-					xnew += diff;
-					if (xnew < 0) {
-						xnew = 0;
-						break;
-					}
-					else if (xnew >= columns) {
-						xnew = columns-1;
-						break;
+					if (ynew > (int)y && xnew > (int)x && xnew-1 >= 1 &&
+							!board.elementAt((int)y).elementAt(xnew).isPresent &&
+							!board.elementAt(ynew).elementAt(xnew-1).isPresent) {
+						xnew -= 1;
 					}
 				}
-				if (!board.elementAt((int)y).elementAt(xnew).isPresent)
-					ynew = (int)y;
 				break;
 			}
 			
