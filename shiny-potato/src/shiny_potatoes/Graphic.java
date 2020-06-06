@@ -89,32 +89,8 @@ public class Graphic extends Thread {
 		glEnable(GL_TEXTURE_2D);
 		
 		drawMenuButton(resource.menuButton1CoordsX, resource.menuButton1CoordsY, menuButton1, 0.5, 0.5, 0.8);
-		/*menuButton1.bind();
-		glBegin(GL_POLYGON);
-		glColor3d(0.5, 0.5, 0.8);
-			glTexCoord2d(0d, 0d);
-		glVertex2i(resource.menuButton1CoordsX[0], resource.menuButton1CoordsY[0]);
-			glTexCoord2d(1d, 0d);
-		glVertex2i(resource.menuButton1CoordsX[1], resource.menuButton1CoordsY[1]);
-			glTexCoord2d(1d, 1d);
-		glVertex2i(resource.menuButton1CoordsX[2], resource.menuButton1CoordsY[2]);
-			glTexCoord2d(0d, 1d);
-		glVertex2i(resource.menuButton1CoordsX[3], resource.menuButton1CoordsY[3]);
-		glEnd();*/
 		
 		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menuButton2, 0.5, 0.5, 0.8);
-		/*menuButton2.bind();
-		glBegin(GL_POLYGON);
-		glColor3d(0.5, 0.5, 0.8);
-			glTexCoord2d(0, 0);
-		glVertex2i(resource.menuButton2CoordsX[0], resource.menuButton2CoordsY[0]);
-			glTexCoord2d(1, 0);
-		glVertex2i(resource.menuButton2CoordsX[1], resource.menuButton2CoordsY[1]);
-			glTexCoord2d(1, 1);
-		glVertex2i(resource.menuButton2CoordsX[2], resource.menuButton2CoordsY[2]);
-			glTexCoord2d(0, 1);
-		glVertex2i(resource.menuButton2CoordsX[3], resource.menuButton2CoordsY[3]);
-		glEnd();*/
 		
 		drawMenuButton(resource.menuButton3CoordsX, resource.menuButton3CoordsY, potatoTextures[0], 0.5, 0.5, 0.8);
 		
