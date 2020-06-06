@@ -204,7 +204,7 @@ public class Graphic extends Thread {
 		drawShooterAndFlyingPotato();
 	}
 
-	void drawPauseButton() {
+	void drawPauseOrGameoverButton(boolean over) {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
@@ -246,7 +246,7 @@ public class Graphic extends Thread {
 
 	void drawPause() {
 		drawGame();
-		drawPauseButton();
+		drawPauseOrGameoverButton(false);
 	}
 
 	void drawRanking() {
@@ -319,6 +319,11 @@ public class Graphic extends Thread {
 		glDisable(GL_BLEND);
 
 	}
+	
+	void drawGameover() {
+		drawGame();
+		drawPauseOrGameoverButton(true);
+	}
 
 	@Override
 	public void run() {
@@ -343,10 +348,16 @@ public class Graphic extends Thread {
 				drawBackground(1, 0);
 				drawRanking();
 				break;
+			case gameover:
+				drawBackground(0.5, 0);
+				drawGameover();
+				break;
 			default:
 				break;
 			}
+			
 			GLFW.glfwSwapBuffers(resource.window);
+			
 			try {
 				sleep(10);
 			} catch (InterruptedException e) {
