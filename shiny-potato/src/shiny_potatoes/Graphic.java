@@ -234,7 +234,25 @@ public class Graphic extends Thread {
 	}
 
 	void drawRanking() {
-
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		for(int i = 0; i < 6; i++) {
+			glBegin(GL_POLYGON);
+			glColor3d(0.36, 0.63, 0.777);
+			glVertex2d(1, 1+2*i);
+			glColor3d(0.63, 0.777, 0.36);
+			glVertex2d(w-1, 1+2*i);
+			glColor3d(0.777, 0.36, 0.63);
+			glVertex2d(w-1, 2+2*i);
+			glColor3d(0.777, 0.63, 0.36);
+			glVertex2d(1, 2+2*i);
+			glEnd();
+			
+		}
+		
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_BLEND);
 	}
 
 	void drawBackground(double brightness, double downBrightnessMod) {
