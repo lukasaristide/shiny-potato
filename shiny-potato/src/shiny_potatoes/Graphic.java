@@ -238,20 +238,47 @@ public class Graphic extends Thread {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		for(int i = 0; i < 6; i++) {
+			if(resource.highScores.get(i) == 0)
+				break;
+			double coordY = 1+2*i;
+			
 			glBegin(GL_POLYGON);
-			glColor3d(0.36, 0.63, 0.777);
-			glVertex2d(1, 1+2*i);
-			glColor3d(0.63, 0.777, 0.36);
-			glVertex2d(w-1, 1+2*i);
-			glColor3d(0.777, 0.36, 0.63);
-			glVertex2d(w-1, 2+2*i);
-			glColor3d(0.777, 0.63, 0.36);
-			glVertex2d(1, 2+2*i);
+				glColor3d(0.36, 0.63, 0.777);
+			glVertex2d(1, coordY);
+				glColor3d(0.63, 0.777, 0.36);
+			glVertex2d(w-1, coordY);
+				glColor3d(0.777, 0.36, 0.63);
+			glVertex2d(w-1, 1+coordY);
+				glColor3d(0.777, 0.63, 0.36);
+			glVertex2d(1, 1+coordY);
 			glEnd();
 			
 		}
-		
+		glEnable(GL_TEXTURE_2D);
+		for(int i = 0; i < 6; i++) {
+			int current = resource.highScores.get(i);
+			if(current == 0)
+				break;
+			double coordY = 1+2*i;
+			
+			for(int j = (int)w-2; j >= 2; j--, current /= 10) {
+				int toWrite = current%10;
+				digit[toWrite].bind();
+				glBegin(GL_POLYGON);
+				glColor3d(1, 1, 1);
+					glTexCoord2d(0d, 0d);
+				glVertex2d(j-0.5, coordY);
+					glTexCoord2d(1d, 0d);
+				glVertex2d(j+0.5, coordY);
+					glTexCoord2d(1d, 1d);
+				glVertex2d(j+0.5, coordY+1);
+					glTexCoord2d(0d, 1d);
+				glVertex2d(j-0.5, coordY+1);
+				glEnd();
+			}
+		}
 		glDisable(GL_TEXTURE_2D);
+		
 		glDisable(GL_BLEND);
 	}
 
