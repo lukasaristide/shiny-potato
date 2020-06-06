@@ -32,9 +32,11 @@ public class Logic {
 	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
 			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
 			menuSpeedDigitCoordsX = new int[4], menuSpeedDigitCoordsY = new int[4],		//Button3 - speed setting
-			menuDecreaseArrowX = new int[3], menuDecreaseArrowY = new int[3],		//Arrow for decreasing speed
-			menuIncreaseArrowX = new int[3], menuIncreaseArrowY = new int[3],		//Arrow for increasing speed
 			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];		//Pause + Game Over
+	
+	double[]
+			menuDecreaseArrowX = new double[3], menuDecreaseArrowY = new double[3],		//Arrow for decreasing speed
+			menuIncreaseArrowX = new double[3], menuIncreaseArrowY = new double[3];		//Arrow for increasing speed
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
@@ -306,6 +308,17 @@ public class Logic {
 		menuSpeedDigitCoordsX[1] = menuSpeedDigitCoordsX[2] = columns - 1;
 		menuSpeedDigitCoordsY[0] = menuSpeedDigitCoordsY[1] = rows - 2;
 		menuSpeedDigitCoordsY[2] = menuSpeedDigitCoordsY[3] = rows - 1;
+		
+		menuIncreaseArrowX[0] = menuIncreaseArrowX[2] = columns - 1.1;
+		menuIncreaseArrowX[1] = columns - 0.6;
+		
+		menuDecreaseArrowY[0] = menuIncreaseArrowY[0] = rows - 1.2;
+		menuDecreaseArrowY[1] = menuIncreaseArrowY[1] = rows - 1.5;
+		menuDecreaseArrowY[2] = menuIncreaseArrowY[2] = rows - 1.8;
+		
+		menuDecreaseArrowX[0] = menuDecreaseArrowX[2] = columns - 1.9;
+		menuDecreaseArrowX[1] = columns - 2.4;
+		
 		
 		pauseButtonCoordsX[0] = pauseButtonCoordsX[3] = 1;
 		pauseButtonCoordsX[1] = pauseButtonCoordsX[2] = columns - 1;

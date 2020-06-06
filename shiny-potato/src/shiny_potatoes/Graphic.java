@@ -92,8 +92,6 @@ public class Graphic extends Thread {
 		
 		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menuButton2, 0.5, 0.5, 0.8);
 		
-		drawMenuButton(resource.menuSpeedDigitCoordsX, resource.menuSpeedDigitCoordsY, digit[resource.speed.get()%10], 1, 1, 0);
-		
 		int curPotato = (int) (Math.random()%3);
 		potatoTextures[curPotato].bind();
 		glBegin(GL_POLYGON);
@@ -108,7 +106,25 @@ public class Graphic extends Thread {
 		glVertex2d(1,h-0.5);
 		glEnd();
 		
+		int speed = resource.speed.get()%10;
+		drawMenuButton(resource.menuSpeedDigitCoordsX, resource.menuSpeedDigitCoordsY, digit[speed], 0 + (speed/10), 1 - (speed/10), 0);
+		
 		glDisable(GL_TEXTURE_2D);
+		
+		glBegin(GL_POLYGON);
+		for(int i = 0; i < 3; i++) {
+			glColor3d(i%3==1 ? 1 : 0, i%3!=1 ? 0.5 : 0, i%3!=1 ? 0.5 : 0);
+			glVertex2d(resource.menuIncreaseArrowX[i], resource.menuIncreaseArrowY[i]);
+		}
+		glEnd();
+		
+		glBegin(GL_POLYGON);
+		for(int i = 0; i < 3; i++) {
+			glColor3d(i%3!=1 ? 0.3 : 0, i%3==1 ? 1 : 0.3, i%3!=1 ? 0.5 : 0);
+			glVertex2d(resource.menuDecreaseArrowX[i], resource.menuDecreaseArrowY[i]);
+		}
+		glEnd();
+		
 		glDisable(GL_BLEND);
 		
 	}
