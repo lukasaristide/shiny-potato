@@ -66,6 +66,9 @@ public class Interface {
 							resource.setBoard();
 						}
 						break;
+					case gameover:
+						resource.currentPerspective = Perspective.menu;
+						resource.setBoard();
 					default:
 						break;	
 					}

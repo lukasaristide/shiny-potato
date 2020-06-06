@@ -2,6 +2,7 @@ package shiny_potatoes;
 
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.glfw.GLFW;
@@ -17,7 +18,8 @@ public class Logic {
 			currentFlying = new AtomicInteger(0), 
 			currentScore = new AtomicInteger(0),
 			shots = new AtomicInteger(0), 
-			parity = new AtomicInteger(0);
+			parity = new AtomicInteger(0),
+			speed = new AtomicInteger(0);
 	
 	AtomicReference<Double> 
 			flyingPotatoX = new AtomicReference<Double>(4d), 
@@ -25,11 +27,13 @@ public class Logic {
 	
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
-	int[]	highScores = new int[6];
+	AtomicIntegerArray	highScores = new AtomicIntegerArray(6);
 	
 	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
 			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
 			menuButton3CoordsX = new int[4], menuButton3CoordsY = new int[4],		//Button3 - speed setting
+			menuDecreaseArrowX = new int[3], menuDecreaseArrowY = new int[3],		//Arrow for decreasing speed
+			menuIncreaseArrowX = new int[3], menuIncreaseArrowY = new int[3],		//Arrow for increasing speed
 			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];		//Pause + Game Over
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
@@ -45,7 +49,8 @@ public class Logic {
 		//result position of new potato
 		int xnew = -1, ynew = -1;
 		//potato flies on a straight line, its distance from the shooter is increased by inc
-		double inc = 0.5;
+		long sleepTime = 25;
+		double inc = ((double)(sleepTime*(speed.get()+2)))/200;
 		double distance = inc;
 		//its coefficient
 		double coeff = (ysho-ypot)/(xsho-xpot);
@@ -139,7 +144,7 @@ public class Logic {
 			ynew = (int)y;
 			flyingPotatoX.set(x);
 			flyingPotatoY.set(y);
-			Thread.sleep(25);
+			Thread.sleep(sleepTime);
 			distance += inc;
 		}
 		flyingPotatoX.set(4d);
@@ -227,8 +232,24 @@ public class Logic {
 	}
 	
 	void gameOver() {
-		currentPerspective = Perspective.menu;
-		setBoard();
+		currentPerspective = Perspective.gameover;
+		int p = 0, q = 6;
+		while (p < q) {
+			int s = (p+q)/2;
+			if (highScores.get(s) > currentScore.get()) {
+				p = s+1;
+			}
+			else {
+				q = s;
+			}
+		}
+		if (p == 6) {
+			return;
+		}
+		for (int i = 5; i > p; i--) {
+			highScores.set(i, highScores.get(i-1));
+		}
+		highScores.set(p, currentScore.get());
 	}
 	
 	void setBoard() {
@@ -261,6 +282,7 @@ public class Logic {
 				board.elementAt(i).add(new Potato()); // initialization 3
 		}
 		setBoard();
+		speed.set(2);
 		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
 		// lib initialization
