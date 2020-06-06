@@ -45,7 +45,8 @@ public class Logic {
 		//result position of new potato
 		int xnew = -1, ynew = -1;
 		//potato flies on a straight line, its distance from the shooter is increased by inc
-		double distance = 0.5, inc = 0.5;
+		double inc = 0.5;
+		double distance = inc;
 		//its coefficient
 		double coeff = (ysho-ypot)/(xsho-xpot);
 		if (coeff > 0 && coeff < 0.2) {
@@ -55,7 +56,7 @@ public class Logic {
 			coeff = -0.2;
 		}
 		
-		//find first free position - size of potatoes ignored
+		//find first free position - size of potatoes included
 		//probably not the best practice - loop stops, when new position is found, or when y is out of bounds
 		while (true) {
 			double x = (columns/2)-((coeff > 0 ? 1 : -1)*(distance/Math.sqrt(coeff*coeff+1)));
@@ -89,60 +90,50 @@ public class Logic {
 			
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
 				//this is game over
-				if (y < rows-3)
+				if (xnew == -1 || ynew == -1)
 					break;
-				//additional fix for too small shooting angles
-				int diff = 0;
-				if ((x-xnew) > 1) {
-					diff = 1;
-				}
-				else if ((xnew-x) > 1) {
-					diff = -1;
+				//don't stop unconnected
+				if (((int)y+parity.get())%2 == 1) {
+					if (ynew > (int)y && xnew < (int)x && xnew+1 <= columns-2 &&
+							!board.elementAt((int)y).elementAt(xnew).isPresent &&
+							!board.elementAt(ynew).elementAt(xnew+1).isPresent) {
+						xnew += 1;
+					}
 				}
 				else {
-					//fix for offset lines
-					if (((((int)y+parity.get())%2 == 0 && x < xnew) || (((int)y+parity.get())%2 == 1 && x > xnew)) &&
-							xnew != -1 && !board.elementAt((int)y).elementAt(xnew).isPresent)
-						ynew = (int)y;
-					break; //this means the angle was good
-				}
-				while (xnew+diff != x) {
-					if (xnew != -1 && board.elementAt((int)y).elementAt(xnew).isPresent)
-						break;
-					else if (ynew != -1 && board.elementAt(ynew).elementAt(xnew+diff).isPresent)
-						break;
-					xnew += diff;
-					if (xnew < 0) {
-						xnew = 0;
-						break;
-					}
-					else if (xnew >= columns) {
-						xnew = columns-1;
-						break;
+					if (ynew > (int)y && xnew > (int)x && xnew-1 >= 1 &&
+							!board.elementAt((int)y).elementAt(xnew).isPresent &&
+							!board.elementAt(ynew).elementAt(xnew-1).isPresent) {
+						xnew -= 1;
 					}
 				}
-				if (!board.elementAt((int)y).elementAt(xnew).isPresent)
-					ynew = (int)y;
 				break;
 			}
 			
-			//don't allow shooting through a line of potatoes
-			boolean under = false, above = false;
-			if (xnew != -1 && ynew != -1) {
-				for (int i = Math.min((int)x, xnew); i <= Math.max((int)x, xnew); i++) {
-					if (!under && board.elementAt(ynew).elementAt(i).isPresent){
-						under = true;
-					}
-					if (!above && board.elementAt((int)y).elementAt(i).isPresent){
-						above = true;
-					}
-					if (under && above) {
-						break;
-					}
+			//don't allow shooting through potatoes
+			if (board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x+0.75)).isPresent || 
+					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+1.25)).isPresent){
+					xnew = (int)x;
+					ynew = (int)y;
+				if (y <= ((int)y) + 0.5 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
+					ynew = (int)y+1;
 				}
-			}
-			if (under && above) {
+				if (x >= ((int)x) + 0.5 && !board.elementAt((int)y).elementAt((int)x+1).isPresent) {
+					xnew = (int)x+1;
+				}
 				break;
+			}
+			else if(board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x-0.25)).isPresent || 
+					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+0.25)).isPresent) {
+				xnew = (int)x;
+				ynew = (int)y;
+				if (y <= ((int)y) + 0.5 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
+					ynew = (int)y+1;
+				}
+				if (x <= ((int)x) + 0.5 && !board.elementAt((int)y).elementAt((int)x-1).isPresent) {
+					xnew = (int)x-1;
+				}
+					break;
 			}
 			xnew = (int)x;
 			ynew = (int)y;
@@ -246,7 +237,9 @@ public class Logic {
 		parity.set(0);
 		//start with three rows and rest of the board empty
 		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < columns; j++) {
+			board.elementAt(i).elementAt(0).isPresent = false;
+			board.elementAt(i).elementAt(columns-1).isPresent = false;
+			for (int j = 1; j < columns-1; j++) {
 				board.elementAt(i).elementAt(j).isPresent = true;
 				//set random color - out of three for now
 				board.elementAt(i).elementAt(j).look = (int)(Math.round(Math.random()*10))%3;
