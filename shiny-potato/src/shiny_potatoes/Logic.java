@@ -2,6 +2,7 @@ package shiny_potatoes;
 
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.lwjgl.glfw.GLFW;
@@ -26,7 +27,7 @@ public class Logic {
 	
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
-	int[]	highScores = new int[6];
+	AtomicIntegerArray	highScores = new AtomicIntegerArray(6);
 	
 	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
 			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
@@ -232,6 +233,23 @@ public class Logic {
 	
 	void gameOver() {
 		currentPerspective = Perspective.gameover;
+		int p = 0, q = 6;
+		while (p < q) {
+			int s = (p+q)/2;
+			if (highScores.get(s) > currentScore.get()) {
+				p = s+1;
+			}
+			else {
+				q = s;
+			}
+		}
+		if (p == 6) {
+			return;
+		}
+		for (int i = 5; i > p; i--) {
+			highScores.set(i, highScores.get(i-1));
+		}
+		highScores.set(p, currentScore.get());
 	}
 	
 	void setBoard() {
