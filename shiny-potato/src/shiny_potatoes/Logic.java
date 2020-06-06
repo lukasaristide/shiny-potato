@@ -25,9 +25,12 @@ public class Logic {
 	
 	Vector<Vector<Potato>> board; // this will store potatoes
 	
+	int[]	highScores = new int[6];
+	
 	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
-			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],
-			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];	//Button2 - ranking
+			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
+			menuButton3CoordsX = new int[4], menuButton3CoordsY = new int[4],		//Button3 - settings
+			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
@@ -284,6 +287,11 @@ public class Logic {
 		menuButton2CoordsY[0] = menuButton2CoordsY[1] = 5;
 		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 7;
 		
+		menuButton3CoordsX[0] = menuButton3CoordsX[3] = columns - 2;
+		menuButton3CoordsX[1] = menuButton3CoordsX[2] = columns - 1;
+		menuButton3CoordsY[0] = menuButton3CoordsY[1] = rows - 2;
+		menuButton3CoordsY[2] = menuButton3CoordsY[3] = rows - 1;
+		
 		pauseButtonCoordsX[0] = pauseButtonCoordsX[3] = 1;
 		pauseButtonCoordsX[1] = pauseButtonCoordsX[2] = columns - 1;
 		pauseButtonCoordsY[0] = pauseButtonCoordsY[1] = 3;
@@ -292,7 +300,7 @@ public class Logic {
 }
 
 enum Perspective{
-	game, menu, pause, ranking;
+	game, menu, pause, ranking, settings;
 }
 
 class Potato {

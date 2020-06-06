@@ -16,17 +16,17 @@ public class Graphic extends Thread {
 
 	void loadTextures() {
 		try {
-			potatoTextures[0] = new Texture("./res/potato1.png");
-			potatoTextures[1] = new Texture("./res/potato2.png");
-			potatoTextures[2] = new Texture("./res/potato3.png");
-			backgroundTexture = new Texture("./res/field.png");
-			menuButton1 = new Texture("./res/menu1.png");
-			menuButton2 = new Texture("./res/menu2.png");
-			pauseButton = new Texture("./res/pause.png");
-			shooter[0] = new Texture("./res/shooter1.png");
-			shooter[1] = new Texture("./res/shooter2.png");
+			potatoTextures[0] = new Texture("./resources/potato1.png");
+			potatoTextures[1] = new Texture("./resources/potato2.png");
+			potatoTextures[2] = new Texture("./resources/potato3.png");
+			backgroundTexture = new Texture("./resources/field.png");
+			menuButton1 = new Texture("./resources/menu1.png");
+			menuButton2 = new Texture("./resources/menu2.png");
+			pauseButton = new Texture("./resources/pause.png");
+			shooter[0] = new Texture("./resources/shooter1.png");
+			shooter[1] = new Texture("./resources/shooter2.png");
 			for(int i = 0; i < 10; i++)
-				digit[i] = new Texture("./res/"+i+".png");
+				digit[i] = new Texture("./resources/"+i+".png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,12 +68,28 @@ public class Graphic extends Thread {
 		}
 	}
 	
+	void drawMenuButton(int[] coordsX, int[] coordsY, Texture tex, double r, double g, double b) {
+		tex.bind();
+		glBegin(GL_POLYGON);
+		glColor3d(r, g, b);
+			glTexCoord2d(0d, 0d);
+		glVertex2i(coordsX[0], coordsY[0]);
+			glTexCoord2d(1d, 0d);
+		glVertex2i(coordsX[1], coordsY[1]);
+			glTexCoord2d(1d, 1d);
+		glVertex2i(coordsX[2], coordsY[2]);
+			glTexCoord2d(0d, 1d);
+		glVertex2i(coordsX[3], coordsY[3]);
+		glEnd();
+	}
+	
 	void drawMenu() {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
 		
-		menuButton1.bind();
+		drawMenuButton(resource.menuButton1CoordsX, resource.menuButton1CoordsY, menuButton1, 0.5, 0.5, 0.8);
+		/*menuButton1.bind();
 		glBegin(GL_POLYGON);
 		glColor3d(0.5, 0.5, 0.8);
 			glTexCoord2d(0d, 0d);
@@ -84,9 +100,10 @@ public class Graphic extends Thread {
 		glVertex2i(resource.menuButton1CoordsX[2], resource.menuButton1CoordsY[2]);
 			glTexCoord2d(0d, 1d);
 		glVertex2i(resource.menuButton1CoordsX[3], resource.menuButton1CoordsY[3]);
-		glEnd();
+		glEnd();*/
 		
-		menuButton2.bind();
+		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menuButton2, 0.5, 0.5, 0.8);
+		/*menuButton2.bind();
 		glBegin(GL_POLYGON);
 		glColor3d(0.5, 0.5, 0.8);
 			glTexCoord2d(0, 0);
@@ -97,7 +114,9 @@ public class Graphic extends Thread {
 		glVertex2i(resource.menuButton2CoordsX[2], resource.menuButton2CoordsY[2]);
 			glTexCoord2d(0, 1);
 		glVertex2i(resource.menuButton2CoordsX[3], resource.menuButton2CoordsY[3]);
-		glEnd();
+		glEnd();*/
+		
+		drawMenuButton(resource.menuButton3CoordsX, resource.menuButton3CoordsY, potatoTextures[0], 0.5, 0.5, 0.8);
 		
 		int curPotato = (int) (Math.random()%3);
 		potatoTextures[curPotato].bind();
