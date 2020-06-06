@@ -30,7 +30,7 @@ public class Logic {
 	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
 			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
 			menuButton3CoordsX = new int[4], menuButton3CoordsY = new int[4],		//Button3 - speed setting
-			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];
+			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];		//Pause + Game Over
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
