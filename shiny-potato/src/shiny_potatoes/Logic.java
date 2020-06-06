@@ -293,7 +293,7 @@ public class Logic {
 }
 
 enum Perspective{
-	game, menu, pause, ranking, settings;
+	game, menu, pause, ranking, gameover;
 }
 
 class Potato {
