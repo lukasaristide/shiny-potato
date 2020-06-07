@@ -16,7 +16,7 @@ public class Logic {
 	long window;
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
-	String fileName = "data.txt";
+	String fileName = "./data.txt";
 	
 	AtomicInteger
 			currentFlying = new AtomicInteger(0), 
