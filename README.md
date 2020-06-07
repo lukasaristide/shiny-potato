@@ -8,4 +8,4 @@ Features:
 
 **How to play**
 
-Simply copy the shiny-potato/release/ folder and run 'Shiny Potato.jar'.
+Simply copy the shiny-potato/release/ folder and run 'Shiny Potato.jar'. For some reasons, on Linux You'd better run it from the command line (by script Play.sh).
