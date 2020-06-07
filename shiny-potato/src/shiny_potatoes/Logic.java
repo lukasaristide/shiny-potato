@@ -137,8 +137,10 @@ public class Logic {
 				if (xnew == -1 || ynew == -1)
 					break;
 				//don't stop unconnected
-				if (ynew-1 >= 0) {// && (!changeCoords || (changeCoords && changeY == 1))) {
+				System.out.println(xnew + " " + ynew + ", " + x + " " + y);
+				if (ynew-1 >= 0) {
 					if (((int)ynew+parity.get())%2 == 0) {
+						System.out.println("x");
 						if (xnew+1 <= columns-2 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
 								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent &&
@@ -148,15 +150,18 @@ public class Logic {
 							if (xnew+1 <= columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
 									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
 								xnew += 1;
+								System.out.println("a");
 							}
 							else if ((xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
 									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
 									xnew-1 == 1) {
 								xnew -= 1;
+								System.out.println("b");
 							}
 						}
 					}
 					else {
+						System.out.println("y");
 						if (xnew-1 >= 1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
 								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent &&
@@ -166,11 +171,13 @@ public class Logic {
 							if (xnew-1 >= 1 && (board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent ||
 									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
 								xnew -= 1;
+								System.out.println("c");
 							}
 							else if ((xnew+1 <= columns-3 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
 									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
 									xnew+1 == columns-2) {
 								xnew += 1;
+								System.out.println("d");
 							}
 						}
 					}
