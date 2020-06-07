@@ -17,6 +17,5 @@ public class ShinyPotato {
 		//terminate lib
 		graphic.stop();
 		GLFW.glfwTerminate();
-		
 	}
 }

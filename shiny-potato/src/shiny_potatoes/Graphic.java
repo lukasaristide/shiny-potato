@@ -1,6 +1,8 @@
 package shiny_potatoes;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
@@ -17,23 +19,25 @@ public class Graphic extends Thread {
 
 	void loadTextures() {
 		try {
-			potatoTextures[0] = new Texture("./resources/potato1.png");
-			potatoTextures[1] = new Texture("./resources/potato2.png");
-			potatoTextures[2] = new Texture("./resources/potato3.png");
-			potatoTextures[3] = new Texture("./resources/blurred_potato1.png");
-			potatoTextures[4] = new Texture("./resources/blurred_potato2.png");
-			potatoTextures[5] = new Texture("./resources/blurred_potato3.png");
-			backgroundTexture = new Texture("./resources/field.png");
-			menuButton1 = new Texture("./resources/menu1.png");
-			menuButton2 = new Texture("./resources/menu2.png");
-			pauseOrGameoverButton = new Texture("./resources/bg_horiz.png");
-			GameoverText = new Texture("./resources/endgame_text.png");
-			PauseText = new Texture("./resources/pause_text.png");
-			shooter[0] = new Texture("./resources/shooter1.png");
-			shooter[1] = new Texture("./resources/shooter2.png");
+			potatoTextures[0] = new Texture(getClass().getResource("../potato1.png").toURI().getPath());
+			potatoTextures[1] = new Texture(getClass().getResource("../potato2.png").toURI().getPath());
+			potatoTextures[2] = new Texture(getClass().getResource("../potato3.png").toURI().getPath());
+			potatoTextures[3] = new Texture(getClass().getResource("../blurred_potato1.png").toURI().getPath());
+			potatoTextures[4] = new Texture(getClass().getResource("../blurred_potato2.png").toURI().getPath());
+			potatoTextures[5] = new Texture(getClass().getResource("../blurred_potato3.png").toURI().getPath());
+			backgroundTexture = new Texture(getClass().getResource("../field.png").toURI().getPath());
+			menuButton1 = new Texture(getClass().getResource("../menu1.png").toURI().getPath());
+			menuButton2 = new Texture(getClass().getResource("../menu2.png").toURI().getPath());
+			pauseOrGameoverButton = new Texture(getClass().getResource("../bg_horiz.png").toURI().getPath());
+			GameoverText = new Texture(getClass().getResource("../endgame_text.png").toURI().getPath());
+			PauseText = new Texture(getClass().getResource("../pause_text.png").toURI().getPath());
+			shooter[0] = new Texture(getClass().getResource("../shooter1.png").toURI().getPath());
+			shooter[1] = new Texture(getClass().getResource("../shooter2.png").toURI().getPath());
 			for (int i = 0; i < 10; i++)
-				digit[i] = new Texture("./resources/" + i + ".png");
+				digit[i] = new Texture(getClass().getResource("../" + i + ".png").toURI().getPath());
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
