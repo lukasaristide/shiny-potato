@@ -53,7 +53,7 @@ public class Logic {
 		if (ypot >= ysho)
 			return;
 		//result position of new potato
-		int xnew = -1, ynew = -1;
+		double xnew = -1, ynew = -1;
 		//potato flies on a straight line, its distance from the shooter is increased by inc
 		long sleepTime = 25;
 		double inc = ((double)(sleepTime*(speed.get()+2)))/200;
@@ -99,55 +99,87 @@ public class Logic {
 			else if (x > columns-2)
 				x = columns-2;
 			
+			boolean isOver = false;
+			//don't allow shooting through potatoes
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
+				isOver = true;
+			}
+			else if (((int)y+(1-(((int)y + parity.get())%2)) < rows-1 && ((int)(x+0.75)) < columns-1 && 
+					board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x+0.75)).isPresent) || 
+					((int)y+(((int)y + parity.get())%2) < rows-1 && ((int)(x+1.25)) < columns-1 && 
+					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+1.25)).isPresent)){
+				xnew = x;
+				ynew = y;
+				if (y <= ((int)y) + 0.5 && (int)y+1 < rows-1 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
+					ynew++;
+				}
+				if (x >= ((int)x) + 0.5 && (int)x+1 < columns-1 && !board.elementAt((int)ynew).elementAt((int)x+1).isPresent) {
+					xnew++;
+				}
+				isOver = true;
+			}
+			else if(((int)y+(1-(((int)y + parity.get())%2)) < rows-1 && ((int)(x-0.25)) > 0 && 
+					board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x-0.25)).isPresent) || 
+					((int)y+(((int)y + parity.get())%2) < rows-1 && ((int)(x+0.25)) < columns-1 && 
+					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+0.25)).isPresent)) {
+				xnew = x;
+				ynew = y;
+				if (y <= ((int)y) + 0.5 && (int)y+1 < rows-1 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
+					ynew++;
+				}
+				if (x <= ((int)x) + 0.5 && (int)x-1 > 0 && !board.elementAt((int)ynew).elementAt((int)x-1).isPresent) {
+					xnew--;
+				}
+				isOver = true;
+			}
+			if (isOver) {
 				//this is game over
 				if (xnew == -1 || ynew == -1)
 					break;
 				//don't stop unconnected
-				if (((int)y+parity.get())%2 == 1) {
-					if (ynew > (int)y && xnew < (int)x && xnew+1 <= columns-2 &&
-							!board.elementAt((int)y).elementAt(xnew).isPresent &&
-							!board.elementAt(ynew).elementAt(xnew+1).isPresent) {
-						xnew += 1;
+				if (ynew-1 >= 0) {// && (!changeCoords || (changeCoords && changeY == 1))) {
+					if (((int)ynew+parity.get())%2 == 0) {
+						if (xnew+1 <= columns-2 &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
+								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent &&
+								xnew-1 >= 1 &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent &&
+								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) {
+							if (xnew+1 <= columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
+									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
+								xnew += 1;
+							}
+							else if ((xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
+									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
+									xnew-1 == 1) {
+								xnew -= 1;
+							}
+						}
 					}
-				}
-				else {
-					if (ynew > (int)y && xnew > (int)x && xnew-1 >= 1 &&
-							!board.elementAt((int)y).elementAt(xnew).isPresent &&
-							!board.elementAt(ynew).elementAt(xnew-1).isPresent) {
-						xnew -= 1;
+					else {
+						if (xnew-1 >= 1 &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
+								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent &&
+								xnew+1 <= columns-2 &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent &&
+								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) {
+							if (xnew-1 >= 1 && (board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent ||
+									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
+								xnew -= 1;
+							}
+							else if ((xnew+1 <= columns-3 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
+									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
+									xnew+1 == columns-2) {
+								xnew += 1;
+							}
+						}
 					}
 				}
 				break;
 			}
 			
-			//don't allow shooting through potatoes
-			if (board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x+0.75)).isPresent || 
-					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+1.25)).isPresent){
-					xnew = (int)x;
-					ynew = (int)y;
-				if (y <= ((int)y) + 0.5 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
-					ynew = (int)y+1;
-				}
-				if (x >= ((int)x) + 0.5 && !board.elementAt((int)y).elementAt((int)x+1).isPresent) {
-					xnew = (int)x+1;
-				}
-				break;
-			}
-			else if(board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x-0.25)).isPresent || 
-					board.elementAt((int)y+(((int)y + parity.get())%2)).elementAt((int)(x+0.25)).isPresent) {
-				xnew = (int)x;
-				ynew = (int)y;
-				if (y <= ((int)y) + 0.5 && !board.elementAt((int)y+1).elementAt((int)x).isPresent) {
-					ynew = (int)y+1;
-				}
-				if (x <= ((int)x) + 0.5 && !board.elementAt((int)y).elementAt((int)x-1).isPresent) {
-					xnew = (int)x-1;
-				}
-					break;
-			}
-			xnew = (int)x;
-			ynew = (int)y;
+			xnew = x;
+			ynew = y;
 			flyingPotatoX.set(x);
 			flyingPotatoY.set(y);
 			Thread.sleep(sleepTime);
@@ -156,10 +188,10 @@ public class Logic {
 		flyingPotatoX.set(4d);
 		flyingPotatoY.set(12d);
 		if (xnew != -1 && ynew != -1) {
-			board.elementAt(ynew).elementAt(xnew).isPresent = true;
-			board.elementAt(ynew).elementAt(xnew).look = currentFlying.get();
+			board.elementAt((int)ynew).elementAt((int)xnew).isPresent = true;
+			board.elementAt((int)ynew).elementAt((int)xnew).look = currentFlying.get();
 			currentFlying.set((int)(Math.round(Math.random()*10))%3);
-			makePotatoesDisappear(xnew, ynew);
+			makePotatoesDisappear((int)xnew, (int)ynew);
 			if (shots.incrementAndGet() == 3) {
 				addPotatoes();
 			}
@@ -314,9 +346,7 @@ public class Logic {
 		parity.set(0);
 		//start with three rows and rest of the board empty
 		for (int i = 0; i < 3; i++) {
-			board.elementAt(i).elementAt(0).isPresent = false;
-			board.elementAt(i).elementAt(columns-1).isPresent = false;
-			for (int j = 1; j < columns-1; j++) {
+			for (int j = 0; j < columns; j++) {
 				board.elementAt(i).elementAt(j).isPresent = true;
 				//set random color - out of three for now
 				board.elementAt(i).elementAt(j).look = (int)(Math.round(Math.random()*10))%3;
