@@ -4,5 +4,8 @@ A bubble shooter type of game. Shoot colourful potatoes and watch them disappear
 
 Features:
 - high score table
-- customization of overlay
-- animated potatoes of different colours
+- animated shiny potatoes of different colours
+
+**How to play**
+
+Simply copy the shiny-potato/release/ folder and run 'Shiny Potato.jar'.
