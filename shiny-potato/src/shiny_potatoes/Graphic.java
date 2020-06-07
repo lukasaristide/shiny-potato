@@ -19,6 +19,7 @@ public class Graphic extends Thread {
 
 	void loadTextures() {
 		try {
+			System.out.println(getClass().getResource("../potato1.png").toURI().getPath());
 			potatoTextures[0] = new Texture(getClass().getResource("../potato1.png").toURI().getPath());
 			potatoTextures[1] = new Texture(getClass().getResource("../potato2.png").toURI().getPath());
 			potatoTextures[2] = new Texture(getClass().getResource("../potato3.png").toURI().getPath());
