@@ -118,8 +118,8 @@ public class Graphic extends Thread {
 		glEnd();
 
 		int speed = resource.speed.get() % 10;
-		drawMenuButton(resource.menuSpeedDigitCoordsX, resource.menuSpeedDigitCoordsY, digit[speed], 0 + (speed / 10),
-				1 - (speed / 10), 0);
+		drawMenuButton(resource.menuSpeedDigitCoordsX, resource.menuSpeedDigitCoordsY, digit[speed], 0 + ((double)(speed-1) / 2),
+				1 - ((double)(speed-1) / 2), 0);
 
 		glDisable(GL_TEXTURE_2D);
 
