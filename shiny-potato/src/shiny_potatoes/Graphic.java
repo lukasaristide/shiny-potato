@@ -3,6 +3,7 @@ package shiny_potatoes;
 import java.io.IOException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
+
 import static org.lwjgl.opengl.GL46.*;
 
 public class Graphic extends Thread {
@@ -171,7 +172,28 @@ public class Graphic extends Thread {
 		glTexCoord2d(0d, 1d);
 		glVertex2d(4, 12 + width);
 		glEnd();
-
+		
+		
+		int current = resource.currentScore.get();
+		double percent = Math.min((double)current / (double)Math.max(1, resource.highScores.get(0)),1),
+				blue = (1 - Math.max(1-percent, percent))*2;
+		coordY = h-0.5;
+		for (double i = w - 0.25; i > w - 3; i-= 0.5, current /= 10) {
+			int toWrite = current % 10;
+			digit[toWrite].bind();
+			glBegin(GL_POLYGON);
+			glColor3d(percent, 1 - percent, blue);
+			glTexCoord2d(0d, 0d);
+			glVertex2d(i - 0.25, coordY);
+			glTexCoord2d(1d, 0d);
+			glVertex2d(i + 0.25, coordY);
+			glTexCoord2d(1d, 1d);
+			glVertex2d(i + 0.25, coordY + 0.5);
+			glTexCoord2d(0d, 1d);
+			glVertex2d(i - 0.25, coordY + 0.5);
+			glEnd();
+		}
+		
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 	}
@@ -219,6 +241,7 @@ public class Graphic extends Thread {
 		glVertex2i(resource.pauseButtonCoordsX[0], resource.pauseButtonCoordsY[0]);
 		glTexCoord2d(1d, 0d);
 		glVertex2i(resource.pauseButtonCoordsX[1], resource.pauseButtonCoordsY[1]);
+		glColor3d(0.5, 0.5, 0.5);
 		glTexCoord2d(1d, 1d);
 		glVertex2i(resource.pauseButtonCoordsX[2], resource.pauseButtonCoordsY[2]);
 		glTexCoord2d(0d, 1d);
@@ -226,13 +249,14 @@ public class Graphic extends Thread {
 		glEnd();
 
 		int current = resource.currentScore.get();
-		double percent = Math.min((double)current / (double)Math.max(1, resource.highScores.get(0)),1);
+		double percent = Math.min((double)current / (double)Math.max(1, resource.highScores.get(0)),1),
+				blue = (1 - Math.max(1-percent, percent))*2;
 		double coordY = ((double) resource.pauseButtonCoordsY[0] + resource.pauseButtonCoordsY[2]) / 2 + 0.3;
 		for (int i = resource.pauseButtonCoordsX[1] - 1; i >= resource.pauseButtonCoordsX[0] + 1; i--, current /= 10) {
 			int toWrite = current % 10;
 			digit[toWrite].bind();
 			glBegin(GL_POLYGON);
-			glColor3d(0, 1 - percent, percent);
+			glColor3d(percent, 1 - percent, blue);
 			glTexCoord2d(0d, 0d);
 			glVertex2d(i - 0.5, coordY);
 			glTexCoord2d(1d, 0d);
