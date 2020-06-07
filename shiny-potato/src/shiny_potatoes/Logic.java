@@ -1,5 +1,8 @@
 package shiny_potatoes;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
@@ -13,13 +16,14 @@ public class Logic {
 	long window;
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
+	String fileName = "data.txt";
 	
 	AtomicInteger
 			currentFlying = new AtomicInteger(0), 
 			currentScore = new AtomicInteger(0),
 			shots = new AtomicInteger(0), 
 			parity = new AtomicInteger(0),
-			speed = new AtomicInteger(0);
+			speed = new AtomicInteger(2);
 	
 	AtomicReference<Double> 
 			flyingPotatoX = new AtomicReference<Double>(4d), 
@@ -250,6 +254,42 @@ public class Logic {
 			highScores.set(i, highScores.get(i-1));
 		}
 		highScores.set(p, currentScore.get());
+		saveToFile();
+	}
+	
+	void saveToFile() {
+		File dataFile = new File(fileName + ".tmp");
+		byte[] b = new byte[64];
+		int len = 1;
+		b[0] = (byte)(speed.get() + '0');
+		for (int i = 0; i < 6; i++) {
+			if (highScores.get(i) == 0) {
+				break;
+			}
+			b[len++] = (byte)' ';
+			int div = 1;
+			while (div <= highScores.get(i)) {
+				div *= 10;
+			}
+			div /= 10;
+			while (div > 1) {
+				b[len++] = (byte)(((highScores.get(i)%(div*10))/div) + '0');
+				div /= 10;
+			}
+			b[len++] = (byte)((highScores.get(i)%10) + '0');
+		}
+		try {
+			dataFile.createNewFile();
+			FileOutputStream outputFile = new FileOutputStream(dataFile);
+			outputFile.write(b, 0, len);
+			outputFile.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		File origFile = new File(fileName);
+		origFile.delete();
+		dataFile.renameTo(origFile);
 	}
 	
 	void setBoard() {
@@ -282,7 +322,37 @@ public class Logic {
 				board.elementAt(i).add(new Potato()); // initialization 3
 		}
 		setBoard();
-		speed.set(2);
+		try {
+			File dataFile = new File(fileName);
+			if (dataFile.exists()) {
+				FileInputStream inputFile = new FileInputStream(dataFile);
+				int i = 0, a = inputFile.read();
+				if (a == -1) {
+					speed.set(2);
+				}
+				else {
+					speed.set(a - '0');
+					inputFile.read();
+					while (inputFile.available() > 0) {
+						a = inputFile.read();
+						if ((char)a == ' ') {
+							i++;
+						}
+						else {
+							highScores.set(i, highScores.get(i)*10 + a-'0');
+						}
+					}
+				}
+				inputFile.close();
+			}
+			else {
+				dataFile.createNewFile();
+				speed.set(2);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		// those two calls have to be called from the main thread - so they are called
 		// here, since main thread will construct Logic
 		// lib initialization
