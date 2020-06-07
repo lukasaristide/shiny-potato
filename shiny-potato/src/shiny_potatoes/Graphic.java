@@ -10,7 +10,7 @@ public class Graphic extends Thread {
 	private Logic resource;
 	double h, w;
 	double border = 0.0, width = 1;
-	Texture[] potatoTextures = new Texture[3], shooter = new Texture[2];
+	Texture[] potatoTextures = new Texture[6], shooter = new Texture[2];
 	Texture backgroundTexture;
 	Texture menuButton1, menuButton2, pauseOrGameoverButton, GameoverText, PauseText;
 	Texture[] digit = new Texture[10];
@@ -20,6 +20,9 @@ public class Graphic extends Thread {
 			potatoTextures[0] = new Texture("./resources/potato1.png");
 			potatoTextures[1] = new Texture("./resources/potato2.png");
 			potatoTextures[2] = new Texture("./resources/potato3.png");
+			potatoTextures[3] = new Texture("./resources/blurred_potato1.png");
+			potatoTextures[4] = new Texture("./resources/blurred_potato2.png");
+			potatoTextures[5] = new Texture("./resources/blurred_potato3.png");
 			backgroundTexture = new Texture("./resources/field.png");
 			menuButton1 = new Texture("./resources/menu1.png");
 			menuButton2 = new Texture("./resources/menu2.png");
@@ -66,7 +69,7 @@ public class Graphic extends Thread {
 			glColor3d(0, 0, 1);
 			break;
 		default:
-			glColor3d(1, 1, 1);
+			glColor3d(1, 1, 0);
 			break;
 		}
 	}

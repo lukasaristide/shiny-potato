@@ -164,31 +164,41 @@ public class Logic {
 			gameOver();
 	}
 	
-	int dfs(int x, int y, int color, boolean pop, boolean[][] visited) {
+	int dfs(int x, int y, int color, int mode, boolean[][] visited) {
+		if(mode == 2) {
+			board.get(y).get(x).isPresent = false;
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
+		}
+		else if(mode == 1) {
+			board.get(y).get(x).look += 3;
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
+		}
 		int howManyofThisColor = 1;
 		if(visited[y][x] || x >= columns-1 || x < 1)
 			return 0;
 		visited[y][x] = true;
 		if(y > 0) {
 			if(board.get(y-1).get(x).isPresent && board.get(y-1).get(x).look == color)
-				howManyofThisColor += dfs(x,y-1,color,pop, visited);
+				howManyofThisColor += dfs(x,y-1,color,mode, visited);
 			int mod = (y + parity.get()) % 2 == 0 ? -1 : 1;
 			if(x+mod > 0 && x+mod < columns-1 && board.get(y-1).get(x+mod).isPresent && board.get(y-1).get(x+mod).look == color)
-				howManyofThisColor += dfs(x+mod,y-1,color,pop, visited);
+				howManyofThisColor += dfs(x+mod,y-1,color,mode, visited);
 		}
 		if(x > 1 && board.get(y).get(x-1).isPresent && board.get(y).get(x-1).look == color)
-			howManyofThisColor += dfs(x-1, y, color, pop, visited);
+			howManyofThisColor += dfs(x-1, y, color, mode, visited);
 		if(x < columns-1 && board.get(y).get(x+1).isPresent && board.get(y).get(x+1).look == color)
-			howManyofThisColor += dfs(x+1, y, color, pop, visited);
+			howManyofThisColor += dfs(x+1, y, color, mode, visited);
 		if(y < rows) {
 			if(board.get(y+1).get(x).isPresent && board.get(y+1).get(x).look == color)
-				howManyofThisColor += dfs(x,y+1,color,pop, visited);
+				howManyofThisColor += dfs(x,y+1,color,mode, visited);
 			int mod = (y + parity.get()) % 2 == 0 ? -1 : 1;
 			if(x+mod > 0 && x+mod < columns-1 && board.get(y+1).get(x+mod).isPresent && board.get(y+1).get(x+mod).look == color)
-				howManyofThisColor += dfs(x+mod,y+1,color,pop, visited);
+				howManyofThisColor += dfs(x+mod,y+1,color,mode, visited);
 		}
-		if(pop)
-			board.get(y).get(x).isPresent = false;
 		return howManyofThisColor;
 	}
 	
@@ -199,14 +209,18 @@ public class Logic {
 			for(int j = 0; j < columns; j++)
 				i[j] = false;
 		
-		int found = dfs(x,y,color,false, visited);
+		int found = dfs(x,y,color,0,visited);
 		
 		if(found > 2) {
 			currentScore.addAndGet(found);
 			for(boolean[] i : visited)
 				for(int j = 0; j < columns; j++)
 					i[j] = false;
-			dfs(x,y,color,true, visited);
+			dfs(x,y,color,1,visited);
+			for(boolean[] i : visited)
+				for(int j = 0; j < columns; j++)
+					i[j] = false;
+			dfs(x,y,color+3,2,visited);
 		}
 	}
 	
