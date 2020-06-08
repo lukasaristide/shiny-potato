@@ -8,5 +8,5 @@ Features:
 
 **How to play**
 
-Simply copy the shiny-potato/release/ folder and run 'Shiny Potato.jar'. For some reasons, on Linux You'd better run it from the command line (using script Play.sh). 
+Simply copy the shiny-potato/release/ folder and run 'Shiny Potato.jar'. For some reasons, You'd better run it from the command line (using "java -jar ./Shiny\ Potato.jar" command, present in file Play.sh). 
 You can alternatively just compile this as an Eclipse project and run in this way.
