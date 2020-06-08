@@ -72,10 +72,9 @@ public class Logic {
 		
 		//find first free position - size of potatoes included
 		boolean isFound = false;
-		double x = 0, y = 0;
 		while (!isFound) {
-			x = (columns/2)-((coeff > 0 ? 1 : -1)*(distance/Math.sqrt(coeff*coeff+1)));
-			y = rows-1-Math.abs(coeff*(((distance/Math.sqrt(coeff*coeff+1)))));
+			double x = (columns/2)-((coeff > 0 ? 1 : -1)*(distance/Math.sqrt(coeff*coeff+1)));
+			double y = rows-1-Math.abs(coeff*(((distance/Math.sqrt(coeff*coeff+1)))));
 			if (y < 0)
 				break;
 			//fix when x is out of bounds
@@ -226,12 +225,25 @@ public class Logic {
 		}
 		else {
 			if (xnew == -1) {
-				xnew = x;
+				if (coeff < 0) {
+					for (int i = (int)xsho; i < columns-1; i++) {
+						if (board.elementAt(rows-2).elementAt(i).isPresent) {
+							xnew = i;
+						}
+					}
+				}
+				else {
+					for (int i = (int)xsho; i > 0; i--) {
+						if (board.elementAt(rows-2).elementAt(i).isPresent) {
+							xnew = i;
+						}
+					}
+				}
 			}
 			if (ynew == -1) {
 				ynew = rows-1;
 			}
-			board.elementAt((int)xnew).elementAt((int)ynew).isPresent = true;
+			board.elementAt((int)ynew).elementAt((int)xnew).isPresent = true;
 			gameOver();
 		}
 	}
