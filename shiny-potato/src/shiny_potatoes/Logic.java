@@ -17,7 +17,7 @@ public class Logic {
 	long window;
 	int height = 480*2, width = 270*2;
 	int rows = 13, columns = 9;
-	String fileName = "./data.txt";
+	String fileName = "data.txt";
 	
 	AtomicInteger
 			currentFlying = new AtomicInteger(0), 
@@ -428,6 +428,7 @@ public class Logic {
 		setBoard();
 		//read speed and highscores from the file or create it if doesn't exist
 		try {
+			fileName = getClass().getResource("../").toURI().getPath() + fileName;
 			File dataFile = new File(fileName);
 			if (dataFile.exists()) {
 				FileInputStream inputFile = new FileInputStream(dataFile);
