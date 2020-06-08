@@ -141,20 +141,22 @@ public class Logic {
 				if (ynew-1 >= 0) {
 					if (((int)ynew+parity.get())%2 == 0) {
 						System.out.println("x");
-						if (xnew+1 <= columns-2 &&
+						if (((xnew+1 < columns-1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent &&
-								xnew-1 >= 1 &&
+								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) ||
+								(int)xnew == columns-2) &&
+								((xnew-1 >= 1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) {
-							if (xnew+1 <= columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
-									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
+								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) ||
+								(int)xnew == 1)) {
+							if (xnew+1 < columns-1 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
+									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
 								xnew += 1;
 								System.out.println("a");
 							}
 							else if ((xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
-									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
-									xnew-1 == 1) {
+									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
+									(int)xnew-1 == 1) {
 								xnew -= 1;
 								System.out.println("b");
 							}
@@ -162,20 +164,22 @@ public class Logic {
 					}
 					else {
 						System.out.println("y");
-						if (xnew-1 >= 1 &&
+						if (((xnew-1 >= 1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent &&
-								xnew+1 <= columns-2 &&
+								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) ||
+								(int)xnew == 1) &&
+								((xnew+1 < columns-1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) {
+								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) ||
+								(int)xnew == columns-2)) {
 							if (xnew-1 >= 1 && (board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent ||
-									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
+									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
 								xnew -= 1;
 								System.out.println("c");
 							}
-							else if ((xnew+1 <= columns-3 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
-									(ynew <= rows-3 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
-									xnew+1 == columns-2) {
+							else if ((xnew+1 < columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
+									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
+									(int)xnew+1 == columns-2) {
 								xnew += 1;
 								System.out.println("d");
 							}
