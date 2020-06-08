@@ -7,7 +7,6 @@ public class ShinyPotato {
 	public static void main(String[] args) throws InterruptedException {
 		//creation of the whole structure
 		Logic logic = new Logic();
-		@SuppressWarnings("unused")
 		Interface interfac = new Interface(logic);
 		Graphic graphic = new Graphic(logic);
 		//start of the graphic

@@ -68,8 +68,8 @@ public class Logic {
 		}
 		
 		//find first free position - size of potatoes included
-		//probably not the best practice - loop stops, when new position is found, or when y is out of bounds
-		while (true) {
+		boolean isFound = false;
+		while (!isFound) {
 			double x = (columns/2)-((coeff > 0 ? 1 : -1)*(distance/Math.sqrt(coeff*coeff+1)));
 			double y = rows-1-Math.abs(coeff*(((distance/Math.sqrt(coeff*coeff+1)))));
 			if (y < 0)
@@ -99,10 +99,9 @@ public class Logic {
 			else if (x > columns-2)
 				x = columns-2;
 			
-			boolean isOver = false;
 			//don't allow shooting through potatoes
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
-				isOver = true;
+				isFound = true;
 			}
 			else if (((int)y+(1-(((int)y + parity.get())%2)) < rows-1 && ((int)(x+0.75)) < columns-1 && 
 					board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x+0.75)).isPresent) || 
@@ -116,7 +115,7 @@ public class Logic {
 				if (x >= ((int)x) + 0.5 && (int)x+1 < columns-1 && !board.elementAt((int)ynew).elementAt((int)x+1).isPresent) {
 					xnew++;
 				}
-				isOver = true;
+				isFound = true;
 			}
 			else if(((int)y+(1-(((int)y + parity.get())%2)) < rows-1 && ((int)(x-0.25)) > 0 && 
 					board.elementAt((int)y+(1-(((int)y + parity.get())%2))).elementAt((int)(x-0.25)).isPresent) || 
@@ -130,17 +129,15 @@ public class Logic {
 				if (x <= ((int)x) + 0.5 && (int)x-1 > 0 && !board.elementAt((int)ynew).elementAt((int)x-1).isPresent) {
 					xnew--;
 				}
-				isOver = true;
+				isFound = true;
 			}
-			if (isOver) {
+			if (isFound) {
 				//this is game over
 				if (xnew == -1 || ynew == -1)
 					break;
 				//don't stop unconnected
-				System.out.println(xnew + " " + ynew + ", " + x + " " + y);
 				if (ynew-1 >= 0) {
 					if (((int)ynew+parity.get())%2 == 0) {
-						System.out.println("x");
 						if (((xnew+1 < columns-1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
 								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) ||
@@ -152,18 +149,15 @@ public class Logic {
 							if (xnew+1 < columns-1 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
 								xnew += 1;
-								System.out.println("a");
 							}
 							else if ((xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
 									(int)xnew-1 == 1) {
 								xnew -= 1;
-								System.out.println("b");
 							}
 						}
 					}
 					else {
-						System.out.println("y");
 						if (((xnew-1 >= 1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
 								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) ||
@@ -175,26 +169,24 @@ public class Logic {
 							if (xnew-1 >= 1 && (board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
 								xnew -= 1;
-								System.out.println("c");
 							}
 							else if ((xnew+1 < columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
 									(int)xnew+1 == columns-2) {
 								xnew += 1;
-								System.out.println("d");
 							}
 						}
 					}
 				}
-				break;
 			}
-			
-			xnew = x;
-			ynew = y;
-			flyingPotatoX.set(x);
-			flyingPotatoY.set(y);
-			Thread.sleep(sleepTime);
-			distance += inc;
+			else {
+				xnew = x;
+				ynew = y;
+				flyingPotatoX.set(x);
+				flyingPotatoY.set(y);
+				Thread.sleep(sleepTime);
+				distance += inc;
+			}
 		}
 		flyingPotatoX.set(4d);
 		flyingPotatoY.set(12d);
@@ -317,7 +309,6 @@ public class Logic {
 	}
 	
 	void saveToFile() {
-		File dataFile = new File(fileName + ".tmp");
 		byte[] b = new byte[64];
 		int len = 1;
 		b[0] = (byte)(speed.get() + '0');
@@ -331,12 +322,12 @@ public class Logic {
 				div *= 10;
 			}
 			div /= 10;
-			while (div > 1) {
+			while (div > 0) {
 				b[len++] = (byte)(((highScores.get(i)%(div*10))/div) + '0');
 				div /= 10;
 			}
-			b[len++] = (byte)((highScores.get(i)%10) + '0');
 		}
+		File dataFile = new File(fileName + ".tmp");
 		try {
 			dataFile.createNewFile();
 			FileOutputStream outputFile = new FileOutputStream(dataFile);
@@ -379,6 +370,7 @@ public class Logic {
 				board.elementAt(i).add(new Potato()); // initialization 3
 		}
 		setBoard();
+		//read speed and highscores from the file or create it if doesn't exist
 		try {
 			File dataFile = new File(fileName);
 			if (dataFile.exists()) {
@@ -388,7 +380,12 @@ public class Logic {
 					speed.set(2);
 				}
 				else {
-					speed.set(a - '0');
+					if (a - '0' <= 0 || a - '0' > 3) {
+						speed.set(2);
+					}
+					else {
+						speed.set(a - '0');
+					}
 					inputFile.read();
 					while (inputFile.available() > 0) {
 						a = inputFile.read();
