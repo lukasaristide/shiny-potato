@@ -311,10 +311,6 @@ public class Logic {
 	}
 	
 	void gameOver() {
-		System.out.println("Before:");
-		for(int i = 0; i < 6; i++)
-			System.out.print(highScores.get(i) + " ");
-		System.out.println();
 		try {
 			gameOverLock.lock();
 			if (currentPerspective == Perspective.game) {
@@ -345,10 +341,6 @@ public class Logic {
 		}
 		highScores.set(p, currentScore.get());
 		saveToFile();
-		System.out.println("After:");
-		for(int i = 0; i < 6; i++)
-			System.out.print(highScores.get(i) + " ");
-		System.out.println();
 	}
 	
 	void saveToFile() {
