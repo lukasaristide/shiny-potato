@@ -75,18 +75,18 @@ public class Graphic extends Thread {
 		}
 	}
 
-	void drawMenuButton(int[] coordsX, int[] coordsY, Texture tex, double r, double g, double b) {
+	void drawMenuButton(double[] coordsX, double[] coordsY, Texture tex, double r, double g, double b) {
 		tex.bind();
 		glBegin(GL_POLYGON);
 		glColor3d(r, g, b);
 		glTexCoord2d(0d, 0d);
-		glVertex2i(coordsX[0], coordsY[0]);
+		glVertex2d(coordsX[0], coordsY[0]);
 		glTexCoord2d(1d, 0d);
-		glVertex2i(coordsX[1], coordsY[1]);
+		glVertex2d(coordsX[1], coordsY[1]);
 		glTexCoord2d(1d, 1d);
-		glVertex2i(coordsX[2], coordsY[2]);
+		glVertex2d(coordsX[2], coordsY[2]);
 		glTexCoord2d(0d, 1d);
-		glVertex2i(coordsX[3], coordsY[3]);
+		glVertex2d(coordsX[3], coordsY[3]);
 		glEnd();
 	}
 
@@ -101,14 +101,14 @@ public class Graphic extends Thread {
 		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, bgHorizontal, 0.5, 0.5, 0.8);
 		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menu2Text, 1, 1, 1);
 		
-		int curPotato = (int) (Math.random() % 3);
+		int curPotato = 0;
 		potatoTextures[curPotato].bind();
 		glBegin(GL_POLYGON);
 		setColorByPotatoNumber(curPotato);
 		glTexCoord2d(0, 0);
-		glVertex2i(resource.menuButton2CoordsX[3], resource.menuButton2CoordsY[3] + 1);
+		glVertex2d(resource.menuButton2CoordsX[3], resource.menuButton2CoordsY[3] + 1);
 		glTexCoord2d(1, 0);
-		glVertex2i(resource.menuButton2CoordsX[2], resource.menuButton2CoordsY[2] + 1);
+		glVertex2d(resource.menuButton2CoordsX[2], resource.menuButton2CoordsY[2] + 1);
 		glTexCoord2d(1, 1);
 		glVertex2d(w - 1, h - 0.5);
 		glTexCoord2d(0, 1);
@@ -244,21 +244,21 @@ public class Graphic extends Thread {
 		glBegin(GL_POLYGON);
 		glColor3d(1, 1, 1);
 		glTexCoord2d(0d, 0d);
-		glVertex2i(resource.pauseButtonCoordsX[0], resource.pauseButtonCoordsY[0]);
+		glVertex2d(resource.pauseButtonCoordsX[0], resource.pauseButtonCoordsY[0]);
 		glTexCoord2d(1d, 0d);
-		glVertex2i(resource.pauseButtonCoordsX[1], resource.pauseButtonCoordsY[1]);
+		glVertex2d(resource.pauseButtonCoordsX[1], resource.pauseButtonCoordsY[1]);
 		glColor3d(0.5, 0.5, 0.5);
 		glTexCoord2d(1d, 1d);
-		glVertex2i(resource.pauseButtonCoordsX[2], resource.pauseButtonCoordsY[2]);
+		glVertex2d(resource.pauseButtonCoordsX[2], resource.pauseButtonCoordsY[2]);
 		glTexCoord2d(0d, 1d);
-		glVertex2i(resource.pauseButtonCoordsX[3], resource.pauseButtonCoordsY[3]);
+		glVertex2d(resource.pauseButtonCoordsX[3], resource.pauseButtonCoordsY[3]);
 		glEnd();
 
 		int current = resource.currentScore.get();
 		double percent = Math.min((double)current / (double)Math.max(1, resource.highScores.get(0)),1),
 				blue = (1 - Math.max(1-percent, percent))*2;
 		double coordY = ((double) resource.pauseButtonCoordsY[0] + resource.pauseButtonCoordsY[2]) / 2 + 0.3;
-		for (int i = resource.pauseButtonCoordsX[1] - 1; i >= resource.pauseButtonCoordsX[0] + 1; i--, current /= 10) {
+		for (int i = (int)resource.pauseButtonCoordsX[1] - 1; i >= resource.pauseButtonCoordsX[0] + 1; i--, current /= 10) {
 			int toWrite = current % 10;
 			digit[toWrite].bind();
 			glBegin(GL_POLYGON);

@@ -33,10 +33,10 @@ public class Logic {
 	
 	AtomicIntegerArray	highScores = new AtomicIntegerArray(6);
 	
-	int[] 	menuButton1CoordsX = new int[4], menuButton1CoordsY = new int[4],		//Button1 - start game
-			menuButton2CoordsX = new int[4], menuButton2CoordsY = new int[4],		//Button2 - ranking
-			menuSpeedDigitCoordsX = new int[4], menuSpeedDigitCoordsY = new int[4],		//Button3 - speed setting
-			pauseButtonCoordsX = new int[4], pauseButtonCoordsY = new int[4];		//Pause + Game Over
+	double[] 	menuButton1CoordsX = new double[4], menuButton1CoordsY = new double[4],		//Button1 - start game
+			menuButton2CoordsX = new double[4], menuButton2CoordsY = new double[4],		//Button2 - ranking
+			menuSpeedDigitCoordsX = new double[4], menuSpeedDigitCoordsY = new double[4],		//Button3 - speed setting
+			pauseButtonCoordsX = new double[4], pauseButtonCoordsY = new double[4];		//Pause + Game Over
 	
 	double[]
 			menuDecreaseArrowX = new double[3], menuDecreaseArrowY = new double[3],		//Arrow for decreasing speed
@@ -423,7 +423,7 @@ public class Logic {
 		menuButton2CoordsX[0] = menuButton2CoordsX[3] = 1;
 		menuButton2CoordsX[1] = menuButton2CoordsX[2] = columns - 1;
 		menuButton2CoordsY[0] = menuButton2CoordsY[1] = 5;
-		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 7;
+		menuButton2CoordsY[2] = menuButton2CoordsY[3] = 6.5;
 		
 		menuSpeedDigitCoordsX[0] = menuSpeedDigitCoordsX[3] = columns - 2;
 		menuSpeedDigitCoordsX[1] = menuSpeedDigitCoordsX[2] = columns - 1;

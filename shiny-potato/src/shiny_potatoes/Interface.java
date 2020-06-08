@@ -16,7 +16,7 @@ public class Interface {
 	private boolean isPaused;
 	private boolean speedChanged;
 
-	boolean isInBoundsButton(double xpos, double ypos, int[] coordsX, int[] coordsY) {
+	boolean isInBoundsButton(double xpos, double ypos, double[] coordsX, double[] coordsY) {
 		// position of the cursor in potatoes
 		int xpot = (int) ((xpos * resource.columns + resource.width - 1) / resource.width) - 1;
 		int ypot = (int) ((ypos * resource.rows + resource.height - 1) / resource.height) - 1;
