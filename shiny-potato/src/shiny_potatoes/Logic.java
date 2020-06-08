@@ -311,20 +311,20 @@ public class Logic {
 	void saveToFile() {
 		byte[] b = new byte[64];
 		int len = 1;
-		b[0] = (byte)(speed.get() + '0');
+		b[0] = (byte)speed.get();
 		for (int i = 0; i < 6; i++) {
 			if (highScores.get(i) == 0) {
 				break;
 			}
-			b[len++] = (byte)' ';
+			b[len++] = (byte)255;
 			int div = 1;
 			while (div <= highScores.get(i)) {
-				div *= 10;
+				div *= 255;
 			}
-			div /= 10;
+			div /= 255;
 			while (div > 0) {
-				b[len++] = (byte)(((highScores.get(i)%(div*10))/div) + '0');
-				div /= 10;
+				b[len++] = (byte)((highScores.get(i)%(div*255))/div);
+				div /= 255;
 			}
 		}
 		File dataFile = new File(fileName + ".tmp");
@@ -375,25 +375,37 @@ public class Logic {
 			File dataFile = new File(fileName);
 			if (dataFile.exists()) {
 				FileInputStream inputFile = new FileInputStream(dataFile);
-				int i = 0, a = inputFile.read();
+				int scoreIdx = 0, a = inputFile.read();
 				if (a == -1) {
 					speed.set(2);
 				}
 				else {
-					if (a - '0' <= 0 || a - '0' > 3) {
+					//check if speed is correct
+					if (a < 1 || a > 3) {
 						speed.set(2);
 					}
 					else {
-						speed.set(a - '0');
+						speed.set(a);
 					}
 					inputFile.read();
-					while (inputFile.available() > 0) {
+					//read up to 6 highscore entries
+					while (inputFile.available() > 0 && scoreIdx < 6) {
 						a = inputFile.read();
-						if ((char)a == ' ') {
-							i++;
+						if (a == 255) {
+							scoreIdx++;
 						}
 						else {
-							highScores.set(i, highScores.get(i)*10 + a-'0');
+							highScores.set(scoreIdx, highScores.get(scoreIdx)*255 + a);
+						}
+					}
+					//simple highsores sorting
+					for (int i = 0; i < 5; i++) {
+						for (int j = 0; j < 5-i; j++) {
+							if (highScores.get(j) < highScores.get(j+1)) {
+								int temp = highScores.get(j);
+								highScores.set(j, highScores.get(j+1));
+								highScores.set(j+1, temp);
+							}
 						}
 					}
 				}
