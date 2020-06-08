@@ -211,13 +211,13 @@ public class Logic {
 		if(mode == 2) {
 			board.get(y).get(x).isPresent = false;
 			try {
-				Thread.sleep(20);
+				Thread.sleep(50/speed.get());
 			} catch (InterruptedException e) {}
 		}
 		else if(mode == 1) {
 			board.get(y).get(x).look += 3;
 			try {
-				Thread.sleep(20);
+				Thread.sleep(50/speed.get());
 			} catch (InterruptedException e) {}
 		}
 		int howManyofThisColor = 1;
