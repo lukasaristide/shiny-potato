@@ -13,7 +13,7 @@ public class Graphic extends Thread {
 	double border = 0.0, width = 1;
 	Texture[] potatoTextures = new Texture[6], shooter = new Texture[2];
 	Texture backgroundTexture;
-	Texture menuButton1, menuButton2, pauseOrGameoverButton, GameoverText, PauseText;
+	Texture menu1Text, menu2Text, bgHorizontal, GameoverText, PauseText;
 	Texture[] digit = new Texture[10];
 
 	void loadTextures() {
@@ -25,9 +25,9 @@ public class Graphic extends Thread {
 			potatoTextures[4] = new Texture("./resources/blurred_potato2.png");
 			potatoTextures[5] = new Texture("./resources/blurred_potato3.png");
 			backgroundTexture = new Texture("./resources/field.png");
-			menuButton1 = new Texture("./resources/menu1.png");
-			menuButton2 = new Texture("./resources/menu2.png");
-			pauseOrGameoverButton = new Texture("./resources/bg_horiz.png");
+			menu1Text = new Texture("./resources/menu1_text.png");
+			menu2Text = new Texture("./resources/menu2_text.png");
+			bgHorizontal = new Texture("./resources/bg_horiz.png");
 			GameoverText = new Texture("./resources/endgame_text.png");
 			PauseText = new Texture("./resources/pause_text.png");
 			shooter[0] = new Texture("./resources/shooter1.png");
@@ -95,10 +95,12 @@ public class Graphic extends Thread {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
 
-		drawMenuButton(resource.menuButton1CoordsX, resource.menuButton1CoordsY, menuButton1, 0.5, 0.5, 0.8);
+		drawMenuButton(resource.menuButton1CoordsX, resource.menuButton1CoordsY, bgHorizontal, 0.5, 0.5, 0.8);
+		drawMenuButton(resource.menuButton1CoordsX, resource.menuButton1CoordsY, menu1Text, 1, 1, 1);
 
-		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menuButton2, 0.5, 0.5, 0.8);
-
+		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, bgHorizontal, 0.5, 0.5, 0.8);
+		drawMenuButton(resource.menuButton2CoordsX, resource.menuButton2CoordsY, menu2Text, 1, 1, 1);
+		
 		int curPotato = (int) (Math.random() % 3);
 		potatoTextures[curPotato].bind();
 		glBegin(GL_POLYGON);
@@ -238,7 +240,7 @@ public class Graphic extends Thread {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
-		pauseOrGameoverButton.bind();
+		bgHorizontal.bind();
 		glBegin(GL_POLYGON);
 		glColor3d(1, 1, 1);
 		glTexCoord2d(0d, 0d);
