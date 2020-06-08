@@ -11,7 +11,7 @@ import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 
 public class Interface {
 	private Logic resource;
-	private ReentrantLock lock;
+	private ReentrantLock shootingLock;
 	private ExecutorService executor;
 	private boolean isPaused;
 	private boolean speedChanged;
@@ -83,12 +83,12 @@ public class Interface {
 						executor.execute(new Thread() {
 							public void run() {
 								try {
-									if (lock.tryLock(0, TimeUnit.SECONDS)) {
+									if (shootingLock.tryLock(0, TimeUnit.SECONDS)) {
 										try {
 											resource.shootPotato(xpos[0], ypos[0]);
 										}
 										finally {
-											lock.unlock();
+											shootingLock.unlock();
 										}
 									}
 								}
@@ -147,7 +147,7 @@ public class Interface {
 
 	Interface(Logic Resource) {
 		this.resource = Resource;
-		lock = new ReentrantLock();
+		shootingLock = new ReentrantLock();
 		executor = Executors.newCachedThreadPool();
 		isPaused = false;
 		speedChanged = false;

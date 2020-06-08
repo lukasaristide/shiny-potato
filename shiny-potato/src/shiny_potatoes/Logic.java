@@ -7,6 +7,7 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -41,6 +42,8 @@ public class Logic {
 	double[]
 			menuDecreaseArrowX = new double[3], menuDecreaseArrowY = new double[3],		//Arrow for decreasing speed
 			menuIncreaseArrowX = new double[3], menuIncreaseArrowY = new double[3];		//Arrow for increasing speed
+	
+	ReentrantLock gameOverLock = new ReentrantLock();
 	
 	void shootPotato(double xpos, double ypos) throws InterruptedException {
 		//position of the cursor in potatoes
@@ -291,7 +294,18 @@ public class Logic {
 		for(int i = 0; i < 6; i++)
 			System.out.print(highScores.get(i) + " ");
 		System.out.println();
-		currentPerspective = Perspective.gameover;
+		try {
+			gameOverLock.lock();
+			if (currentPerspective == Perspective.game) {
+				currentPerspective = Perspective.gameover;
+			}
+			else {
+				return;
+			}
+		}
+		finally {
+			gameOverLock.unlock();
+		}
 		int p = 0, q = 6;
 		while (p < q) {
 			int s = (p+q)/2;
