@@ -102,6 +102,9 @@ public class Logic {
 			else if (x > columns-2)
 				x = columns-2;
 			
+			//current direction of flying potato
+			//due to modulo it's not the same as coefficient's sign and may be lost in the next step
+			boolean dir = xnew < x;
 			//don't allow shooting through potatoes
 			if (board.elementAt((int)y).elementAt((int)x).isPresent) {
 				isFound = true;
@@ -142,16 +145,25 @@ public class Logic {
 				if (ynew-1 >= 0) {
 					if (((int)ynew+parity.get())%2 == 0) {
 						if (((xnew+1 < columns-1 &&
-								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
 								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) ||
 								(int)xnew == columns-2) &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
+								((int)ynew >= rows-1 || !board.elementAt((int)ynew+1).elementAt((int)xnew).isPresent) &&
 								((xnew-1 >= 1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) ||
+								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent &&
+								((int)ynew >= rows-1 || !board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent)) ||
 								(int)xnew == 1)) {
 							if (xnew+1 < columns-1 && (board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent))) {
-								xnew += 1;
+								if ((!dir && xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
+										(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
+										(dir && (int)xnew-1 == 1)) {
+									xnew -= 1;
+								}
+								else {
+									xnew += 1;
+								}
 							}
 							else if ((xnew-1 >= 2 && (board.elementAt((int)ynew-1).elementAt((int)xnew-2).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-2).isPresent))) ||
@@ -161,17 +173,26 @@ public class Logic {
 						}
 					}
 					else {
-						if (((xnew-1 >= 1 &&
-								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
+						if ((((xnew-1 >= 1 &&
 								!board.elementAt((int)ynew).elementAt((int)xnew-1).isPresent) ||
 								(int)xnew == 1) &&
+								!board.elementAt((int)ynew-1).elementAt((int)xnew).isPresent &&
+								((int)ynew >= rows-1 || !board.elementAt((int)ynew+1).elementAt((int)xnew).isPresent)) &&
 								((xnew+1 < columns-1 &&
 								!board.elementAt((int)ynew-1).elementAt((int)xnew+1).isPresent &&
-								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent) ||
+								!board.elementAt((int)ynew).elementAt((int)xnew+1).isPresent &&
+								((int)ynew >= rows-1 || !board.elementAt((int)ynew+1).elementAt((int)xnew+1).isPresent)) ||
 								(int)xnew == columns-2)) {
 							if (xnew-1 >= 1 && (board.elementAt((int)ynew-1).elementAt((int)xnew-1).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew-1).isPresent))) {
-								xnew -= 1;
+								if ((dir && xnew+1 < columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
+										(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
+										(!dir && (int)xnew+1 == columns-2)) {
+									xnew += 1;
+								}
+								else {
+									xnew -= 1;
+								}
 							}
 							else if ((xnew+1 < columns-2 && (board.elementAt((int)ynew-1).elementAt((int)xnew+2).isPresent ||
 									(ynew < rows-2 && board.elementAt((int)ynew+1).elementAt((int)xnew+2).isPresent))) ||
