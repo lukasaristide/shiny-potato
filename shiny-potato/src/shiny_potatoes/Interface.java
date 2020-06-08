@@ -18,8 +18,8 @@ public class Interface {
 
 	boolean isInBoundsButton(double xpos, double ypos, double[] coordsX, double[] coordsY) {
 		// position of the cursor in potatoes
-		int xpot = (int) ((xpos * resource.columns + resource.width - 1) / resource.width) - 1;
-		int ypot = (int) ((ypos * resource.rows + resource.height - 1) / resource.height) - 1;
+		double xpot = ((xpos * resource.columns + resource.width - 1) / resource.width) - 1;
+		double ypot = ((ypos * resource.rows + resource.height - 1) / resource.height) - 1;
 		if (xpot < coordsX[0] || xpot >= coordsX[1])
 			return false;
 		if (ypot < coordsY[0] || ypot >= coordsY[2])
@@ -35,13 +35,13 @@ public class Interface {
 		double b = (coordsY[0]-ypot)/(coordsX[0]-xpot);
 		if (a*b < 0)
 			return false;
-		if (Math.abs(a) >Math.abs(b))
+		if (Math.abs(a) > Math.abs(b))
 			return false;
 		a = (coordsY[2]-coordsY[1])/(coordsX[2]-coordsX[1]);
 		b = (coordsY[2]-ypot)/(coordsX[2]-xpot);
 		if (a*b < 0)
 			return false;
-		if (Math.abs(a) >Math.abs(b))
+		if (Math.abs(a) > Math.abs(b))
 			return false;
 		return true;
 	}
